@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE IdDoc [
+<!ELEMENT IdDoc (IdDoc*)>
+<!ELEMENT IdDoc (TipoDTE,Folio,FchEmis,IndServicio,FchVenc)>
+<!ELEMENT TipoDTE (#PCDATA)>
+<!ELEMENT Folio (#PCDATA)>
+<!ELEMENT FchEmis (#PCDATA)>
+<!ELEMENT IndServicio (#PCDATA)>
+<!ELEMENT FchVenc (#PCDATA)>
+
+    <IdDoc>
+        <TipoDTE></TipoDTE>
+        <Folio></Folio>
+        <FchEmis></FchEmis>
+        <IndServicio></IndServicio>
+        <FchVenc></FchVenc>
+    </IdDoc>

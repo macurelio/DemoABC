@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module version="4">
+  <component name="FacetManager">
+    <facet type="Spring" name="Spring">
+      <configuration>
+        <fileset id="fileset" name="Testing" removed="false">
+          <dependency>spring_boot_com.example.crudabctestdos.CrudAbcTestDosApplication</dependency>
+          <file>file://$MODULE_DIR$/src/main/java/com/example/crudabctestdos/testing.xml</file>
+          <file>file://$MODULE_DIR$/src/main/java/com/example/crudabctestdos/CrudAbcTestDosApplication.java</file>
+        </fileset>
+      </configuration>
+    </facet>
+  </component>
+</module>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+  <meta charset="UTF-8">
+  <title>Facturador</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+        crossorigin="anonymous">
+</head>
+<body>
+
+<div class="container">
+  <div>
+    <a  class="btn btn-primary" href="/regresar">Cuenta Corriente Consumo</a>
+  </div>
+  <h1>Emisor</h1>
+  <table class="table">
+    <thead>
+    <tr>
+      <th>Rut </th>
+      <th>Razon Social</th>
+      <th>Giro Emisor </th>
+      <th>Direccion de Origen</th>
+      <th>Comuna Emisor</th>
+      <th>Ciudad Emisor</th>
+
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="emisor : ${emisors}" >
+      <td th:text="${emisor.rutEmisor}"></td>
+      <td th:text="${emisor.rzonSociemisor}"></td>
+      <td th:text="${emisor.giroEmisor}"></td>
+      <td th:text="${emisor.dirOrigen}"></td>
+      <td th:text="${emisor.cmnaEmisor}"></td>
+      <td th:text="${emisor.ciudadEmisor}"></td>
+
+
+    </tr>
+    </tbody>
+  </table>
+  <div>
+    <a  class="btn btn-primary" href="/agregar">Agregar factura</a>
+  </div>
+
+</div>
+
+</body>
+</html>

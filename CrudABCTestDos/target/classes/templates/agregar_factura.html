@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+  <meta charset="UTF-8">
+  <title>Agregar Factura</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+        crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+  <h1>Agregar Factura</h1>
+  <form th:action="@{/guardar1}" th:object="${documento}" method="post">
+    <div class="form-group">
+
+    <div class="form-group">
+      <label>TIPO DTE:</label>
+      <input class="form-control" type="text" step="0.01" th:field="*{tipoDte}">
+    </div>
+    <div class="form-group">
+      <label>FOLO:</label>
+      <input class="form-control" type="text" step="0.01" th:field="*{folio}">
+    </div>
+
+    <div class="form-group">
+      <label>INDICADOR DE SERVICIO:</label>
+      <input class="form-control" type="text" step="0.01" th:field="*{indServicio}">
+        <a  class="btn btn-primary" href="/regresar">Regresar</a>
+
+    <button class="btn btn-primary" type="submit">Guardar</button>
+  </form>
+</div>
+</body>
+</html>

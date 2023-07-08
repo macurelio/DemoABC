@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+  <meta charset="UTF-8">
+  <title>Calcular</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+        crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+  <h1>Facturas</h1>
+  <table class="table">
+    <thead>
+    <tr>
+      <th>Suma</th>
+      <th>Impuesto</th>
+      <th>Total con Impuesto:</th>
+    </tr>
+    </thead>
+    <tbody>
+    <td th:text="${total}"></td>
+    <td th:text="${impuesto}"></td>
+    <td th:text="${totalConImpuesto}"></td>
+    </tr>
+    </tbody>
+  </table>
+  <div>
+    <a  class="btn btn-primary" href="/regresar">Regresar</a>
+  </div>
+
+</div>
+</body>
+</html>

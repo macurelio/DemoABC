@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+  <meta charset="UTF-8">
+  <title>Facturador</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+        crossorigin="anonymous">
+</head>
+<body>
+
+<div class="container">
+  <div>
+    <a  class="btn btn-primary" href="/listarCtaCorriente">Cuenta Corriente</a>
+  </div>
+  <h1>Cuenta Corriente</h1>
+  <table class="table">
+    <thead>
+    <tr>
+      <th>Fecha de Emision </th>
+      <th>Tipo de Documento</th>
+      <th>Fecha de Vencimiento</th>
+
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="documento : ${documentos}" >
+      <td th:text="${documento.fchEmis}"></td>
+      <td th:text="${documento.tipoDte}"></td>
+      <td th:text="${documento.fchVenc}"></td>
+
+    </tr>
+    </tbody>
+  </table>
+</div>
+<div class="container">
+  <h1>Facturas</h1>
+  <table class="table">
+    <thead>
+    <tr>
+      <th>Consumo</th>
+      <th>Importe Neto</th>
+      <th>Iva</th>
+      <th>Total</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="item : ${items}">
+      <td th:text="${item.consumo}"></td>
+      <td th:text="${item.getNeto}"></td>
+      <td th:text="${item.getImpuesto}"></td>
+      <td th:text="${item.getTotalconImpuesto}"></td>
+      <td>
+        <a th:href="@{/item/{id}/calcular(id=${item.idDoc})}" class="btn btn-success">Calcular</a>
+      </td>
+      <td>
+        <a th:href="@{/item/{id}/eliminar(id=${item.idDoc})}" class="btn btn-danger">Eliminar</a>
+      </td>
+      <td>
+        <a th:href="@{/item/{id}/imprimir-xml(id=${item.idDoc})}" class="btn btn-success">imprimir-xml</a>
+      </td>
+      <td>
+        <a th:href="@{/item/{id}/download(id=${item.idDoc})}" class="btn btn-primary">Descarga-xml</a>
+      </td>
+
+
+
+    </tr>
+    </tbody>
+  </table>
+  <div>
+    <a  class="btn btn-primary" href="/agregar">Agregar factura</a>
+  </div>
+
+</div>
+
+</body>
+</html>
