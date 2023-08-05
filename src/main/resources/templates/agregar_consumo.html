@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+  <meta charset="UTF-8">
+  <title>Agregar Factura</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+        crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+  <h1>Agregar Datos:</h1>
+  <form th:action="@{/salvar-consumo}" th:object="${consumo}" method="post">
+    <input type="hidden" name="idCon" th:field="*{idRecep}"/>
+    <div class="form-group">
+
+      <div class="form-group">
+        <label>FECHA DE LECTURA ANTERIOS DESDE:</label>
+        <input class="form-control" type="date"  th:field="*{lecturaAnt1}">
+      </div>
+
+      <div class="form-group">
+        <label>FECHA DE LECTURA ACTUAL HASTA:</label>
+        <input class="form-control" type="date"  th:field="*{lecturaAct2}">
+      </div>
+      <div class="form-group">
+        <label>LECTURA DEL MES ANTERIOR:</label>
+        <input class="form-control" type="number"  th:field="*{lecturaValor1}">
+      </div>
+      <div class="form-group">
+        <label>LECTURA DEL MES ACTUAL</label>
+        <input class="form-control" type="number"  th:field="*{lecturaValor2}">
+      </div>
+
+      <label>CARGOS ADICIONALES DEL MES ANTERIOR:</label>
+      <input class="form-control" type="number"  th:field="*{otrosCargos}">
+    </div>
+    <button class="btn btn-primary" type="submit">Guardar</button>
+    <a  class="btn btn-primary" href="/regresarConsumo">Regresar</a>
+  </form>
+
+</div>
+</body>
+</html>

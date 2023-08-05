@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.5.final using JasperReports Library version 6.20.5-3efcf2e67f959db3888d79f73dde2dbd7acb4f8e  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="EnelBoleta1" pageWidth="1008" pageHeight="612" orientation="Landscape" columnWidth="968" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c3c79ed0-31eb-447a-8d2a-b2f5348fd054">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<parameter name="idRecep" class="java.lang.Long">
+		<defaultValueExpression><![CDATA[$P{idRecep}]]></defaultValueExpression>
+	</parameter>
+	<queryString language="SQL">
+		<![CDATA[SELECT *
+FROM consumo, documento, receptor WHERE consumo.id_con =1 AND documento.id_doc=1
+ AND receptor.id_recep=1]]>
+	</queryString>
+	<field name="rutReceptor" class="java.lang.String"/>
+	<field name="idRecep" class="java.lang.Long"/>
+	<field name="rznSocrecep" class="java.lang.String"/>
+	<field name="dirRecep" class="java.lang.String"/>
+	<field name="tipoDte" class="java.lang.String"/>
+	<field name="folio" class="java.lang.String"/>
+	<field name="fchEmis" class="java.lang.String"/>
+	<field name="fchVenc" class="java.lang.String"/>
+	<field name="getImpuesto" class="java.lang.Double"/>
+	<field name="getTotalPagar" class="java.lang.Double"/>
+	<field name="getTotalNeto" class="java.lang.Double"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="390" splitType="Stretch">
+			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
+			<image>
+				<reportElement x="500" y="0" width="250" height="150" uuid="3cd27418-04b4-4a5b-be17-962cf9cb725e"/>
+				<imageExpression><![CDATA["file:///C:/Users/marco/OneDrive/Documentos/FotosPublicidad/EnelCabecera.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="779" y="9" width="200" height="20" uuid="40068694-4892-4792-bcf3-2d191748be55"/>
+				<textElement textAlignment="Center">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[R.U.T 76.411.321-7]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="819" y="29" width="160" height="20" uuid="64e4f612-81a8-477e-9ef4-bb8fd5f9c05d"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[BOLETA ELECTRONICA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="779" y="99" width="90" height="20" uuid="61764c6a-29aa-49d7-9349-e29422798903"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Nº CLIENTE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="760" y="119" width="120" height="20" uuid="a5d77f39-a957-4f7a-a6ad-54995929dd41"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Fecha de emision]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="519" y="279" width="240" height="30" uuid="62e053e4-063c-4a74-a376-00239593a1bc"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Ruta: C05009101-0309 | ViaCorresp: RMAM]]></text>
+			</staticText>
+			<image>
+				<reportElement x="10" y="243" width="240" height="147" uuid="8ba9b22d-0496-4b24-bc0d-3f3b7cc59da7"/>
+				<imageExpression><![CDATA["file:///C:/Users/marco/OneDrive/Documentos/FotosPublicidad/DatosSuministro.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="510" y="310" width="150" height="30" uuid="df403893-6724-494a-ba59-cbab00c353cd"/>
+				<textElement textAlignment="Center">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Cuanto debo?]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="689" y="309" width="120" height="20" uuid="74d38115-b37f-4bcc-a7c8-fcfc07220e53"/>
+				<textElement textAlignment="Center">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Total a Pagar]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="679" y="370" width="186" height="20" uuid="1ddeac68-d84a-45f7-9459-d22e2924f0aa"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Fecha de Vencimiento]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="872" y="80" width="100" height="29" uuid="479231a0-df52-40ce-890d-4b58a7ea504d">
+					<property name="com.jaspersoft.studio.element.name" value="rutReceptor"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{rutReceptor}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="880" y="110" width="100" height="29" uuid="37caa2dd-82cc-4616-8f8e-3d4912692eac"/>
+				<textFieldExpression><![CDATA[$F{folio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="870" y="309" width="100" height="29" uuid="b8f25ee9-89e3-4adb-b74f-9dfcc494712c"/>
+				<textFieldExpression><![CDATA[$F{rutReceptor}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="500" y="150" width="250" height="20" uuid="7ec066c6-9c04-4cf0-b63b-a0f4ef686652"/>
+				<textFieldExpression><![CDATA[$F{rutReceptor}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="500" y="180" width="250" height="20" uuid="5b34cf9d-5672-42b4-9bdf-ef5049954a14"/>
+				<textFieldExpression><![CDATA[$F{rutReceptor}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="850" y="370" width="138" height="19" uuid="5288f1e5-7ae2-4f83-ab8a-905c042e25a8"/>
+				<textFieldExpression><![CDATA[$F{rutReceptor}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="10" y="-10" width="460" height="229" uuid="e21d5d44-ccb1-45f7-b8f4-93686d9cd619"/>
+				<imageExpression><![CDATA["file:///C:/Users/marco/OneDrive/Documentos/FotosPublicidad/ProblemasServ.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<columnFooter>
+		<band height="150" splitType="Stretch">
+			<staticText>
+				<reportElement x="710" y="80" width="120" height="20" uuid="68f49550-b4bc-4f8d-8f03-fe83b7a6f182"/>
+				<textElement textAlignment="Center">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Total a Pagar]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="650" y="0" width="90" height="20" uuid="5769d14f-1dfe-4ca8-84de-de1bf91f874f"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Nº CLIENTE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="679" y="40" width="127" height="20" uuid="873df1f9-38ea-4ce8-bcbc-88a80f2ab493"/>
+				<text><![CDATA[Fecha de Vencimiento]]></text>
+			</staticText>
+			<image>
+				<reportElement x="5" y="0" width="485" height="149" uuid="ed703db2-d8ac-4182-bfed-0d3a2e6f483c"/>
+				<imageExpression><![CDATA["file:///C:/Users/marco/OneDrive/Documentos/FotosPublicidad/PagoPreferencial.jpg"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="850" y="80" width="138" height="19" uuid="c6666d03-b57a-4ca6-93d3-c5027be700b6"/>
+				<textFieldExpression><![CDATA[$F{rutReceptor}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="850" y="37" width="138" height="19" uuid="d7ddf155-114f-4958-9ba4-a03d7ad102b8"/>
+				<textFieldExpression><![CDATA[$F{rutReceptor}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="850" y="1" width="138" height="19" uuid="df05e201-72ed-4dd9-ab59-831039bfdf65"/>
+				<textFieldExpression><![CDATA[$F{rutReceptor}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="19" splitType="Stretch"/>
+	</pageFooter>
+</jasperReport>

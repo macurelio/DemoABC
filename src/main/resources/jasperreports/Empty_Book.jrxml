@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.5.final using JasperReports Library version 6.20.5-3efcf2e67f959db3888d79f73dde2dbd7acb4f8e  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Empty_Book" pageWidth="595" pageHeight="842" sectionType="Part" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="30" bottomMargin="30" uuid="d2716064-8ae4-40cf-a575-33afba400e3a">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter"/>
+	<property name="net.sf.jasperreports.print.create.bookmarks" value="true"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<queryString language="SQL">
+		<![CDATA[SELECT *
+FROM consumo, documento, receptor WHERE consumo.id_con =1 AND documento.id_doc=1
+ AND receptor.id_recep=1]]>
+	</queryString>
+	<field name="id_con" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="id_con"/>
+		<property name="com.jaspersoft.studio.field.label" value="id_con"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="consumo"/>
+	</field>
+	<field name="lectura_ant1" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="lectura_ant1"/>
+		<property name="com.jaspersoft.studio.field.label" value="lectura_ant1"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="consumo"/>
+	</field>
+	<field name="lectura_act1" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="lectura_act1"/>
+		<property name="com.jaspersoft.studio.field.label" value="lectura_act1"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="consumo"/>
+	</field>
+	<field name="lectura_ant2" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="lectura_ant2"/>
+		<property name="com.jaspersoft.studio.field.label" value="lectura_ant2"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="consumo"/>
+	</field>
+	<field name="lectura_act2" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="lectura_act2"/>
+		<property name="com.jaspersoft.studio.field.label" value="lectura_act2"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="consumo"/>
+	</field>
+	<field name="lectura_valor1" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="lectura_valor1"/>
+		<property name="com.jaspersoft.studio.field.label" value="lectura_valor1"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="consumo"/>
+	</field>
+	<field name="lectura_valor2" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="lectura_valor2"/>
+		<property name="com.jaspersoft.studio.field.label" value="lectura_valor2"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="consumo"/>
+	</field>
+	<field name="otros_cargos" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="otros_cargos"/>
+		<property name="com.jaspersoft.studio.field.label" value="otros_cargos"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="consumo"/>
+	</field>
+	<field name="id_recep" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="id_recep"/>
+		<property name="com.jaspersoft.studio.field.label" value="id_recep"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="consumo"/>
+	</field>
+	<field name="COLUMN_10" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="id_recep"/>
+		<property name="com.jaspersoft.studio.field.label" value="id_recep"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="receptor"/>
+	</field>
+	<field name="rut_receptor" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="rut_receptor"/>
+		<property name="com.jaspersoft.studio.field.label" value="rut_receptor"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="receptor"/>
+	</field>
+	<field name="rzn_socrecep" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="rzn_socrecep"/>
+		<property name="com.jaspersoft.studio.field.label" value="rzn_socrecep"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="receptor"/>
+	</field>
+	<field name="dir_recep" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="dir_recep"/>
+		<property name="com.jaspersoft.studio.field.label" value="dir_recep"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="receptor"/>
+	</field>
+	<field name="cmna_recep" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="cmna_recep"/>
+		<property name="com.jaspersoft.studio.field.label" value="cmna_recep"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="receptor"/>
+	</field>
+	<field name="ciudad_recep" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="ciudad_recep"/>
+		<property name="com.jaspersoft.studio.field.label" value="ciudad_recep"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="receptor"/>
+	</field>
+	<field name="id_doc" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="id_doc"/>
+		<property name="com.jaspersoft.studio.field.label" value="id_doc"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="documento"/>
+	</field>
+	<field name="tipo_dte" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="tipo_dte"/>
+		<property name="com.jaspersoft.studio.field.label" value="tipo_dte"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="documento"/>
+	</field>
+	<field name="folio" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="folio"/>
+		<property name="com.jaspersoft.studio.field.label" value="folio"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="documento"/>
+	</field>
+	<field name="fch_emis" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="fch_emis"/>
+		<property name="com.jaspersoft.studio.field.label" value="fch_emis"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="documento"/>
+	</field>
+	<field name="ind_servicio" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="ind_servicio"/>
+		<property name="com.jaspersoft.studio.field.label" value="ind_servicio"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="documento"/>
+	</field>
+	<field name="fch_venc" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="fch_venc"/>
+		<property name="com.jaspersoft.studio.field.label" value="fch_venc"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="documento"/>
+	</field>
+	<field name="COLUMN_22" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="id_con"/>
+		<property name="com.jaspersoft.studio.field.label" value="id_con"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="documento"/>
+	</field>
+	<field name="id_item" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="id_item"/>
+		<property name="com.jaspersoft.studio.field.label" value="id_item"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="item"/>
+	</field>
+	<field name="consumo" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="consumo"/>
+		<property name="com.jaspersoft.studio.field.label" value="consumo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="item"/>
+	</field>
+	<field name="admin_servicio" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="admin_servicio"/>
+		<property name="com.jaspersoft.studio.field.label" value="admin_servicio"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="item"/>
+	</field>
+	<field name="arriendo" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="arriendo"/>
+		<property name="com.jaspersoft.studio.field.label" value="arriendo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="item"/>
+	</field>
+	<field name="trans_elec" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="trans_elec"/>
+		<property name="com.jaspersoft.studio.field.label" value="trans_elec"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="item"/>
+	</field>
+	<field name="saldo_anterior" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="saldo_anterior"/>
+		<property name="com.jaspersoft.studio.field.label" value="saldo_anterior"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="item"/>
+	</field>
+	<detail>
+		<part uuid="0dec0915-128d-4f24-87b3-b27b44ca48ba">
+			<p:subreportPart xmlns:p="http://jasperreports.sourceforge.net/jasperreports/parts" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/parts http://jasperreports.sourceforge.net/xsd/parts.xsd">
+				<subreportParameter name="REPORT_CONNECTION">
+					<subreportParameterExpression><![CDATA[$P{REPORT_CONNECTION}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportExpression><![CDATA["EnelBoleta1.jasper"]]></subreportExpression>
+			</p:subreportPart>
+		</part>
+		<part uuid="0979276b-22ce-4c6f-a67f-475e6e5c51a2">
+			<p:subreportPart xmlns:p="http://jasperreports.sourceforge.net/jasperreports/parts" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/parts http://jasperreports.sourceforge.net/xsd/parts.xsd">
+				<subreportParameter name="REPORT_CONNECTION">
+					<subreportParameterExpression><![CDATA[$P{REPORT_CONNECTION}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportExpression><![CDATA["EnelBoleta2.jasper"]]></subreportExpression>
+			</p:subreportPart>
+		</part>
+	</detail>
+</jasperReport>

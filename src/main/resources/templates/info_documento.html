@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+  <meta charset="UTF-8">
+  <title>Facturador</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+        crossorigin="anonymous">
+</head>
+<body>
+<h1>Cuenta Corriente Receptor</h1>
+<table class="table">
+  <thead>
+  <tr>
+    <th>RUT</th>
+    <th>RAZON SOCIAL</th>
+    <th>DIRECCION</th>
+    <th>COMUNA</th>
+    <th>CIUDAD</th>
+    <th></th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="receptor : ${receptor}" >
+    <td th:text="${receptor.idRecep}"></td>
+    <td th:text="${receptor.rutReceptor}"></td>
+    <td th:text="${receptor.rznSocrecep}"></td>
+    <td th:text="${receptor.dirRecep}"></td>
+    <td th:text="${receptor.cmnaRecep}"></td>
+    <td th:text="${receptor.ciudadRecep}"></td>
+
+    <td>
+      <a th:href="@{/receptor/{id}/editar(id=${receptor.idRecep})}" class="btn btn-warning">Editar</a>
+    <td>
+
+
+  </tr>
+  </tbody>
+</table>
+
+    <h2>Cuenta Corriente Docuentos</h2>
+    <table class="table">
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>TIPO DTE</th>
+        <th>FOLIO</th>
+        <th>FECHA DE EMISION</th>
+        <th>INDICADOR DE SERVICIO</th>
+        <th>FECHA DE VENCIMIENTO</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="documento : ${documentos}" >
+        <td th:text="${documento.idDoc}"></td>
+        <td th:text="${documento.tipoDte}"></td>
+        <td th:text="${documento.folio}"></td>
+        <td th:text="${documento.fchEmis}"></td>
+        <td th:text="${documento.indServicio}"></td>
+        <td th:text="${documento.fchVenc}"></td>
+
+        <td>
+          <a th:href="@{/documento/{id}/editar(id=${documento.idDoc})}" class="btn btn-warning">Editar</a>
+        <td>
+
+      </tr>
+      </tbody>
+    </table>
+
+
+
+        <h3>Cuenta Corriente Emisor</h3>
+        <table class="table">
+          <thead>
+          <tr>
+            <th>ID</th>
+            <th>Lectura Valor1</th>
+            <th>Lectura Valor2</th>
+            <th>Lectura Actual 1</th>
+            <th>Lectura Actual 2</th>
+            <th>Lectura Anterio 1</th>
+            <th>Lectura Anterior 2</th>
+            <th>TOTAL ADMIN</th>
+            <th>TOTAL ELECTRICIDAD CONSUMIDA</th>
+            <th>TOTAL ARRIENDO</th>
+            <th>Otros Cargos</th>
+            <th>Total Neto</th>
+            <th>Impuesto</th>
+            <th>Total a Pagar</th>
+            <th></th>
+
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="consumo : ${consumos}" >
+            <td th:text="${consumo.idCon}"></td>
+            <td th:text="${consumo.lecturaValor1}"></td>
+            <td th:text="${consumo.lecturaValor2}"></td>
+            <td th:text="${consumo.lecturaAct1}"></td>
+            <td th:text="${consumo.lecturaAct2}"></td>
+            <td th:text="${consumo.lecturaAnt1}"></td>
+            <td th:text="${consumo.lecturaAct2}"></td>
+            <td th:text="${consumo.otrosCargos}"></td>
+            <td th:text="${consumo.getTotalTpoBase}"></td>
+            <td th:text="${consumo.getElecConsumida}"></td>
+            <td th:text="${consumo.getTotalArriendo}"></td>
+            <td th:text="${consumo.getTotalNeto}"></td>
+            <td th:text="${consumo.getImpuesto}"></td>
+            <td th:text="${consumo.getTotalPagar}"></td>
+
+            <td>
+              <a th:href="@{/consumo/{id}/editar(id=${consumo.idCon})}" class="btn btn-warning">Editar</a>
+            <td>
+
+
+
+
+
+
+          </tr>
+  </tbody>
+</table>
+
+<div>
+  <a  class="btn btn-primary" href="/regresar">Regresar</a>
+</div>
+
+</body>
+</html>

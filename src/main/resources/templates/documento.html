@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head th:replace="layout/layout :: head">
+  <meta charset="UTF-8">
+  <title>Facturador</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+        crossorigin="anonymous">
+</head>
+<body>
+<div class="container-fluid" layout:fragment="page-content">
+<h1>Cuenta Corriente Docuentos</h1>
+<table class="table">
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>TIPO DTE</th>
+    <th>FOLIO</th>
+    <th>FECHA DE EMISION</th>
+    <th>INDICADOR DE SERVICIO</th>
+    <th>FECHA DE VENCIMIENTO</th>
+    <th></th>
+    <th></th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="documento : ${documentos}" >
+    <td th:text="${documento.idDoc}"></td>
+    <td th:text="${documento.tipoDte}"></td>
+    <td th:text="${documento.folio}"></td>
+    <td th:text="${documento.fchEmis}"></td>
+    <td th:text="${documento.indServicio}"></td>
+    <td th:text="${documento.fchVenc}"></td>
+
+    <td>
+      <a th:href="@{/documento/{id}/editar(id=${documento.idDoc})}" class="btn btn-warning">Editar</a>
+    <td>
+
+    <td>
+      <a th:href="@{/documento/{id}/eliminar(id=${documento.idDoc})}" class="btn btn-danger">Eliminar</a>
+    </td>
+    <td>
+      <a th:href="@{/documento/{id}/info_documento(id=${documento.idDoc})}" class="btn btn-warning">Info</a>
+    </td>
+
+
+  </tr>
+  </tbody>
+</table>
+
+<div>
+  <a  class="btn btn-primary" href="/regresar">Regresar</a>
+  <a  class="btn btn-primary" href="/agregar-documento">Agregar Documento</a>
+</div>
+
+</div>
+<th:block layout:fragment="page-scripts">
+
+</th:block>
+
+
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head th:replace="layout/layout :: head">
+  <meta charset="UTF-8">
+  <title>Facturador</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+        crossorigin="anonymous">
+</head>
+<body>
+<div class="container-fluid" layout:fragment="page-content">
+  <h1>Cuenta Corriente Emisor</h1>
+  <table class="table">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Lectura Anterior</th>
+      <th>UltimoDiaDelMes</th>
+      <th>Dias Transcurridos</th>
+      <th>ULTIMO DIA DEL MES 2</th>
+      <th>Dias Transcurridos</th>
+      <th>Lectura Actual</th>
+      <th>Otros Cargos</th>
+      <th>Total</th>
+      <th>Impuesto</th>
+      <th>Total a Pagar</th>
+      <th>ConsumoKwh</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th>Imprimir XML</th>
+      <th>Descargar XML</th>
+      <th>Descargar PDF</th>
+
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="consumo : ${consumos}" >
+      <td th:text="${consumo.idCon}"></td>
+      <td th:text="${consumo.lecturaAnt1}"></td>
+      <td th:text="${consumo.getUltimoDiaDelMes}"></td>
+      <td th:text="${consumo.getDiasTranscurridos1}"></td>
+      <td th:text="${consumo.getUltimoDiaDelMes2}"></td>
+      <td th:text="${consumo.lecturaAct2}"></td>
+      <td th:text="${consumo.getDiasTranscurridos2}"></td>
+      <td th:text="${consumo.otrosCargos}"></td>
+      <td th:text="${consumo.getTotalconImpuesto}"></td>
+      <td th:text="${consumo.getImpuesto}"></td>
+      <td th:text="${consumo.getTotalPagar}"></td>
+      <td th:text="${consumo.getConsumoKwh}"></td>
+
+
+      <td>
+        <a th:href="@{/consumo/{id}/documento(id=${consumo.idCon})}" class="btn btn-info">Documentos</a>
+      </td>
+
+      <td>
+        <a th:href="@{/consumo/{id}/editar(id=${consumo.idCon})}" class="btn btn-warning">Editar</a>
+      </td>
+
+      <td>
+        <a th:href="@{/consumo/{id}/eliminar(id=${consumo.idCon})}" class="btn btn-danger">Eliminar</a>
+      </td>
+      <td>
+        <a th:href="@{/consumo/{id}/imprimir-xml(id=${consumo.idRecep})}" class="btn btn-success">imprimir-xml</a>
+      </td>
+      <td>
+        <a th:href="@{/consumo/{id}/download-xml(id=${consumo.idRecep})}" class="btn btn-primary">Descarga-xml</a>
+      </td>
+      <td>
+        <a th:href="@{/{id}/generar-informe(id=${consumo.idCon})}" class="btn btn-link">Descarga-PDF</a>
+      </td>
+
+
+
+
+    </tr>
+    </tbody>
+  </table>
+
+  <div>
+    <a  class="btn btn-primary" href="/regresar">Regresar</a>
+  </div>
+</div>
+<th:block layout:fragment="page-scripts">
+
+</th:block>
+
+</body>
+</html>

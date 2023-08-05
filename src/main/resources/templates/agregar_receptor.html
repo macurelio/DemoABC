@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Agregar Factura</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+    <h1>Agregar Datos:</h1>
+    <form th:action="@{/guardar4}" th:object="${receptor}" method="post">
+        <div class="form-group">
+
+            <div class="form-group">
+                <label>RUT:</label>
+                <input class="form-control" type="number"  th:field="*{rutReceptor}">
+            </div>
+            <div class="form-group">
+                <label>RAZON SOCIAL:</label>
+                <input class="form-control" type="text" th:field="*{rznSocrecep}">
+            </div>
+            <div class="form-group">
+                <label>DIRECCION:</label>
+                <input class="form-control" type="text"  th:field="*{dirRecep}">
+            </div>
+            <div class="form-group">
+                <label>COMUNA:</label>
+                <input class="form-control" type="text"  th:field="*{cmnaRecep}">
+            </div>
+                <label>CIUDAD:</label>
+                <input class="form-control" type="text"  th:field="*{ciudadRecep}">
+            </div>
+
+        <button class="btn btn-primary" type="submit">Guardar</button>
+        <a  class="btn btn-primary" href="/regresarReceptor">Regresar</a>
+    </form>
+
+</div>
+</body>
+</html>

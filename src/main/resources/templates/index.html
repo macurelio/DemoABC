@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head th:replace="layout/layout :: head">
+  <meta charset="UTF-8">
+  <title></title>
+</head>
+<body>
+<div class="container-fluid" layout:fragment="page-content">
+
+  <h1>Facturas</h1>
+  <div>
+    <a  class="btn btn-primary" href="/emisor">EMISOR</a>
+    <a  class="btn btn-primary" href="/consumo">CONSUMOS</a>
+  </div>
+
+</div>
+<th:block layout:fragment="page-scripts">
+
+</th:block>
+
+
+</body>
+</html>

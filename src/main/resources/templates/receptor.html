@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head th:replace="layout/layout :: head">
+  <meta charset="UTF-8">
+  <title>Facturador</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+        crossorigin="anonymous">
+</head>
+<body>
+<div class="container-fluid" layout:fragment="page-content">
+<h1>Cuenta Corriente Receptor</h1>
+<table class="table">
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>RUT</th>
+    <th>RAZON SOCIAL</th>
+    <th>DIRECCION</th>
+    <th>COMUNA</th>
+    <th>CIUDAD</th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="receptor : ${receptors}" >
+    <td th:text="${receptor.idRecep}"></td>
+    <td th:text="${receptor.rutReceptor}"></td>
+    <td th:text="${receptor.rznSocrecep}"></td>
+    <td th:text="${receptor.dirRecep}"></td>
+    <td th:text="${receptor.cmnaRecep}"></td>
+    <td th:text="${receptor.ciudadRecep}"></td>
+
+    <td>
+      <a th:href="@{/receptor/{id}/editar(id=${receptor.idRecep})}" class="btn btn-warning">Editar</a>
+    </td>
+    <td>
+      <a th:href="@{/receptor/{id}/eliminar(id=${receptor.idRecep})}" class="btn btn-danger">Eliminar</a>
+    </td>
+    <td>
+      <a th:href="@{/receptor/{id}/consumo(id=${receptor.idRecep})}" class="btn btn-success">Consumos</a>
+    </td>
+    <td>
+      <a th:href="@{/receptor/{id}/generar-consumo(id=${receptor.idRecep})}" class="btn btn-primary">Agregar Boleta</a>
+    </td>
+
+
+
+
+
+  </tr>
+  </tbody>
+</table>
+
+<div>
+  <a  class="btn btn-primary" href="/regresar">Regresar</a>
+  <a  class="btn btn-primary" href="/agregar-receptor">Agregar Receptor</a>
+</div>
+</div>
+<th:block layout:fragment="page-scripts">
+
+</th:block>
+</body>
+</html>

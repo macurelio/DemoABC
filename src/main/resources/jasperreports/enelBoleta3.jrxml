@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.5.final using JasperReports Library version 6.20.5-3efcf2e67f959db3888d79f73dde2dbd7acb4f8e  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="enelBoleta3" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ae954aba-f752-4d4d-8d89-e4e748b32174">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<queryString>
+		<![CDATA[SELECT *
+FROM consumo, documento, receptor WHERE consumo.id_con =1 AND documento.id_doc=1
+ AND receptor.id_recep=1]]>
+	</queryString>
+	<field name="admin_servicio" class="java.lang.Double"/>
+	<field name="trans_elec" class="java.lang.Double"/>
+	<field name="arriendo" class="java.lang.Double"/>
+	<field name="saldo_anterior" class="java.lang.Double"/>
+	<field name="lectura_valor1" class="java.lang.Double"/>
+	<field name="lectura_valor2" class="java.lang.Double"/>
+	<field name="iva" class="java.lang.Double"/>
+	<field name="totalPagar" class="java.lang.Double"/>
+	<field name="neto" class="java.lang.Double"/>
+	<field name="consumo" class="java.lang.Double"/>
+	<field name="consumoKwh" class="java.lang.Double"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="301" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="40" width="231" height="30" uuid="f51a310c-d1ce-483d-a69b-ec6d8f9d60e6"/>
+				<textElement>
+					<font size="18"/>
+				</textElement>
+				<text><![CDATA[Detalle de mi cuenta]]></text>
+			</staticText>
+			<image>
+				<reportElement x="380" y="-1" width="421" height="302" uuid="3a1c8f26-d5be-4647-9f57-6ee7cdf9a2fb"/>
+				<imageExpression><![CDATA["C:/Users/marco/OneDrive/Documentos/FotosPublicidad/CONSUMO.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="10" y="123" width="131" height="22" uuid="8d6df61f-a1b9-45a7-810c-4fc180e30b50"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Servicios Electricos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="153" width="160" height="22" uuid="c20221ca-200e-4797-9be3-62a050114406"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Administracion del servicio
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="173" width="160" height="22" uuid="f27bfcd0-2335-4a90-90d6-7434da9cbea8"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Transporte de Electricidad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="193" width="160" height="22" uuid="489ac28f-4f44-42d0-84ca-487bd69a23e6"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Electricidad Consumida]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="213" width="160" height="22" uuid="aee7ced7-2eb4-4b6c-94f4-fff6fe48d805"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Arriendo del medidor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="235" width="131" height="22" uuid="493a7347-f8c8-4046-af0a-83886cff5a1e"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Otros Cargos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="253" width="220" height="22" uuid="cb400e74-cb08-4195-989a-65bb9c40a870"/>
+				<textElement>
+					<font size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Ajuste para facilitar Pago mes anterior]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="275" width="220" height="22" uuid="1288a282-22ef-4090-b9f4-75b71f93bc95"/>
+				<textElement>
+					<font size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Ajuste para facilitar Pago mes actual]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="250" y="163" width="120" height="20" uuid="2f1fc390-b6f7-4423-8405-7004346a7c8f"/>
+				<textFieldExpression><![CDATA[$F{admin_servicio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="250" y="181" width="120" height="20" uuid="02de34da-8f11-4d53-ac63-837ab9b12adf"/>
+				<textFieldExpression><![CDATA[$F{trans_elec}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="250" y="201" width="120" height="20" uuid="140d825d-5603-41ff-8b81-ef40618e741b"/>
+				<textFieldExpression><![CDATA[$F{consumo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="250" y="221" width="120" height="20" uuid="e8422ada-6930-4bf2-930e-4a0dd7a95ed7"/>
+				<textFieldExpression><![CDATA[$F{arriendo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="260" y="262" width="110" height="20" uuid="b481b561-40ac-4797-b9b9-9310b3bbe0a0"/>
+				<textFieldExpression><![CDATA[$F{saldo_anterior}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="560" y="70" width="70" height="14" uuid="89098f9a-c7c1-413a-87bb-31e83e2ba6a7"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{lectura_valor1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="560" y="84" width="70" height="18" uuid="c779cfde-26ce-4532-83af-b5b0429a560e"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{lectura_valor2}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="120" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="94" width="180" height="20" uuid="35f7d726-7a8c-4ba0-a1be-a3e04e29960d"/>
+				<textElement>
+					<font size="14" isBold="false"/>
+				</textElement>
+				<text><![CDATA[TOTAL A PAGAR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="50" width="180" height="20" uuid="5d717a17-8ee2-4990-af39-ab01d3d5d924"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Total Boleta]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="30" width="180" height="20" uuid="e1e799e6-bd02-43a8-9a87-bb8f0818b74f"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Total IVA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="10" width="180" height="20" uuid="8e9eabe0-f924-42e6-a858-97aaedbb6359"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Total neto]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="260" y="65" width="100" height="30" uuid="00bb9b9d-7a0d-4e2a-9802-93f1fae9fc5a">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="57630442-4d3a-431d-9eb9-4a23b20e6aa4"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{totalPagar}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="260" y="40" width="100" height="30" uuid="68c82e94-942e-4624-b636-ec548f2aa28b">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e2b04b65-d7e0-40bd-943c-155a8d896e73"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{iva}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="260" y="10" width="100" height="30" uuid="f21557be-2612-4ebb-a8fc-edd077182d3e">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="034583fc-8a9b-4bd1-913a-e02178f430e1"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{neto}]]></textFieldExpression>
+			</textField>
+			<barChart>
+				<chart evaluationTime="Report">
+					<reportElement x="410" y="4" width="390" height="110" uuid="8c7cf83a-9faf-46e4-a90e-0281e55d9cfe"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<dataset incrementType="Column">
+						<incrementWhenExpression><![CDATA[$F{consumoKwh}]]></incrementWhenExpression>
+					</dataset>
+					<categorySeries>
+						<seriesExpression><![CDATA["SERIES 1"]]></seriesExpression>
+						<categoryExpression><![CDATA[6]]></categoryExpression>
+						<valueExpression><![CDATA[6]]></valueExpression>
+						<labelExpression><![CDATA[$F{consumoKwh}]]></labelExpression>
+					</categorySeries>
+				</categoryDataset>
+				<barPlot>
+					<plot/>
+					<itemLabel/>
+					<categoryAxisFormat>
+						<axisFormat labelColor="#000000" tickLabelColor="#000000" axisLineColor="#000000"/>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat labelColor="#000000" tickLabelColor="#000000" axisLineColor="#000000"/>
+					</valueAxisFormat>
+				</barPlot>
+			</barChart>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="160" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

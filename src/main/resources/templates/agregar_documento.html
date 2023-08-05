@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+  <meta charset="UTF-8">
+  <title>Agregar Factura</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+        crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+  <h1>Agregar Datos:</h1>
+  <form th:action="@{/guardar2}" th:object="${documento}" method="post">
+    <input type="hidden" name="idCon" th:field="*{idCon}"/>
+    <input type="hidden" name="idDoc" th:field="*{idDoc}"/>
+    <div class="form-group">
+
+      <div class="form-group">
+        <label>NUMERO DE DTE:</label>
+        <input class="form-control" type="text"  th:field="*{tipoDte}">
+      </div>
+      <div class="form-group">
+        <label>FOLIO:</label>
+        <input class="form-control" type="text" th:field="*{folio}">
+      </div>
+      <div class="form-group">
+        <label>FECHA DE EMISION:</label>
+        <input class="form-control" type="date"  th:field="*{fchEmis}">
+      </div>
+      <div class="form-group">
+        <label>FECHA DE VENCIMINETO:</label>
+        <input class="form-control" type="date"  th:field="*{fchVenc}">
+      </div>
+        <label>Indicador de Servicio: </label>
+        <input class="form-control" type="number"  th:field="*{indServicio}">
+      </div>
+
+    <button class="btn btn-primary" type="submit">Guardar</button>
+    <a  class="btn btn-primary" href="/regresarDocumento">Regresar</a>
+  </form>
+
+</div>
+</body>
+</html>
