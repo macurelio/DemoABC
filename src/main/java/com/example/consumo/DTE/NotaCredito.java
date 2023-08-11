@@ -7,55 +7,53 @@ public class NotaCredito {
     private Receptor receptor;
     private Documento documento;
 
-    public Long getIdRecepNC(){
+    public Long getIdRecepNC() {
         return receptor.getIdRecep();
     }
-    public String getRutNC(){
+
+    public String getRutNC() {
         return receptor.getRutReceptor();
     }
-    public String getRznSocrecepNC(){
+
+    public String getRznSocrecepNC() {
         return receptor.getRznSocrecep();
     }
-    public String getDirRecepNC(){
+
+    public String getDirRecepNC() {
         return receptor.getDirRecep();
     }
 
-    public String getCmnaRecepNC(){
+    public String getCmnaRecepNC() {
         return receptor.getCmnaRecep();
     }
-    public String getCiudadRecepNC(){
+
+    public String getCiudadRecepNC() {
         return receptor.getCiudadRecep();
     }
 
-    public Long getIdDocNC(){
+    public Long getIdDocNC() {
         return documento.getIdDoc();
     }
 
-    public String getFolioNC(){
+    public String getFolioNC() {
         return documento.getFolio();
     }
 
-    public String getFchEmisNC(){
+    public String getFchEmisNC() {
         return documento.getFchEmis();
     }
 
-    public String getIndServicioNC(){
+    public String getIndServicioNC() {
         return documento.getIndServicio();
     }
 
-    public String getFchVencNC(){
+    public String getFchVencNC() {
         return documento.getFchVenc();
     }
 
-    public Long getIdConNC(){
+    public Long getIdConNC() {
         return documento.getIdCon();
     }
-
-
-
-
-
-
 
 
 }

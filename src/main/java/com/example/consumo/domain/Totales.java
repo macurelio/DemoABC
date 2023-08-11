@@ -9,7 +9,7 @@ import java.io.Serializable;
 
 @Data
 @Entity
-@Table (name = "totales")
+@Table(name = "totales")
 public class Totales implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

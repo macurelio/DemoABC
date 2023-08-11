@@ -17,8 +17,8 @@ public class Documento implements Serializable {
     private String fchEmis;
     private String indServicio;
     private String fchVenc;
+    private Long idRecep;
     private Long idCon;
-
 
 
 }

@@ -11,7 +11,7 @@
 <div class="container">
   <h1>Agregar Datos:</h1>
   <form th:action="@{/guardar2}" th:object="${documento}" method="post">
-    <input type="hidden" name="idCon" th:field="*{idCon}"/>
+    <input type="hidden" name="idCon" th:field="*{idDoc}"/>
     <input type="hidden" name="idDoc" th:field="*{idDoc}"/>
     <div class="form-group">
 

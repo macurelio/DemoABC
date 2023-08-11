@@ -5,17 +5,14 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjusters;
-import java.util.Date;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 @Entity
 @Data
-@Table(name="consumo")
+@Table(name = "consumo")
 public class Consumo implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -32,12 +29,12 @@ public class Consumo implements Serializable {
 
     private Long idRecep;
 
-    @OneToMany(targetEntity = Consumo.class,cascade = CascadeType.ALL)
-    @JoinColumn(name="idCon", referencedColumnName = "idRecep")
+    @OneToMany(targetEntity = Consumo.class, cascade = CascadeType.ALL)
+    @JoinColumn(name = "idCon", referencedColumnName = "idRecep")
     private List<Consumo> consumos;
 
-    public double getConsumoKwh(){
-        return (getLecturaValor1()  - getLecturaValor2() );
+    public double getConsumoKwh() {
+        return (getLecturaValor1() - getLecturaValor2());
     }
 
 
@@ -45,11 +42,11 @@ public class Consumo implements Serializable {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         return lecturaAnt1.withDayOfMonth(lecturaAnt1.lengthOfMonth()).format(formatter);
     }
+
     public long getDiasTranscurridos1() {
         LocalDate ultimoDiaMes = lecturaAnt1.withDayOfMonth(lecturaAnt1.lengthOfMonth());
         return ChronoUnit.DAYS.between(lecturaAnt1, ultimoDiaMes) + 1;
     }
-
 
 
     public String getUltimoDiaDelMes2() {
@@ -65,9 +62,8 @@ public class Consumo implements Serializable {
     }
 
 
-
-    public double getDias(){
-        return (getDiasTranscurridos1()  + getDiasTranscurridos2() );
+    public double getDias() {
+        return (getDiasTranscurridos1() + getDiasTranscurridos2());
     }
 
     public double getPorcentaje1() {
@@ -83,39 +79,40 @@ public class Consumo implements Serializable {
     }
 
     public Double getPorcentajePrecio1() {
-        return (getPorcentaje1() * getConsumoKwh() ) / 100;
+        return (getPorcentaje1() * getConsumoKwh()) / 100;
     }
 
     public Double getPorcentajePrecio2() {
-        return (getPorcentaje2() * getConsumoKwh() ) /100;
+        return (getPorcentaje2() * getConsumoKwh()) / 100;
     }
 
     public Double getPorcentajeArriendo1() {
-        return (getPorcentaje1() * 1 ) / 100;
+        return (getPorcentaje1() * 1) / 100;
     }
 
     public Double getPorcentajeArriendo2() {
-        return (getPorcentaje2() * 1 ) /100;
+        return (getPorcentaje2() * 1) / 100;
     }
+
     public Double getAdminServicioPer1() {
         return (getPorcentajeArriendo1() * 1112.94);
     }
 
 
     public Double getAdminServicioPer2() {
-        return (getPorcentajeArriendo2() *  1112.94);
+        return (getPorcentajeArriendo2() * 1112.94);
     }
 
     public Double getElectPer1() {
-        return (getPorcentajePrecio1() *  20.34);
+        return (getPorcentajePrecio1() * 20.34);
     }
 
     public Double getElectPer2() {
-        return (getPorcentajePrecio2() *  20.34) ;
+        return (getPorcentajePrecio2() * 20.34);
     }
 
     public Double getCargoPer1() {
-        return (getPorcentajePrecio1() *  0.487);
+        return (getPorcentajePrecio1() * 0.487);
     }
 
     public Double getCargoPer2() {
@@ -123,15 +120,15 @@ public class Consumo implements Serializable {
     }
 
     public Double geCompraPer1() {
-        return (getPorcentajePrecio1() *  13.158);
+        return (getPorcentajePrecio1() * 13.158);
     }
 
     public Double geCompraPer2() {
-        return (getPorcentajePrecio2() *  13.158);
+        return (getPorcentajePrecio2() * 13.158);
     }
 
     public Double geTpotBasePer1() {
-        return (getPorcentajePrecio1() *  29.495) ;
+        return (getPorcentajePrecio1() * 29.495);
     }
 
     public Double geTpotBasePer2() {
@@ -139,11 +136,11 @@ public class Consumo implements Serializable {
     }
 
     public Double getCargoEnerPer1() {
-        return (getPorcentajePrecio1() * 74.293 );
+        return (getPorcentajePrecio1() * 74.293);
     }
 
     public Double getCargoEnerPer2() {
-        return (getPorcentajePrecio2() *  74.293);
+        return (getPorcentajePrecio2() * 74.293);
     }
 
     public Double getArriendoPer1() {
@@ -155,50 +152,56 @@ public class Consumo implements Serializable {
     }
 
 
-
     public Double getTotalAdmin() {
-        return Math.floor((getAdminServicioPer1() + getAdminServicioPer2() ) * 1.19);
+        return Math.floor((getAdminServicioPer1() + getAdminServicioPer2()) * 1.19);
 
     }
+
     public Double getTotalElect() {
-        return Math.floor((getElectPer1() + getElectPer2() ) * 1.19);
+        return Math.floor((getElectPer1() + getElectPer2()) * 1.19);
 
     }
+
     public Double getTotalCargo() {
-        return Math.floor(getCargoPer1() + getCargoPer2() ) ;
+        return Math.floor(getCargoPer1() + getCargoPer2());
 
     }
+
     public Double getTotalCompra() {
-        return Math.ceil((geCompraPer1() + geCompraPer2() ) * 1.19);
+        return Math.ceil((geCompraPer1() + geCompraPer2()) * 1.19);
 
     }
+
     public Double getTotalTpoBase() {
-        return Math.ceil((geTpotBasePer1() + geTpotBasePer2() ) * 1.19);
+        return Math.ceil((geTpotBasePer1() + geTpotBasePer2()) * 1.19);
 
     }
+
     public Double getTotalCargoEner() {
-        return Math.ceil((getCargoEnerPer1() + getCargoEnerPer2() ) * 1.19);
+        return Math.ceil((getCargoEnerPer1() + getCargoEnerPer2()) * 1.19);
 
     }
+
     public Double getTotalArriendo() {
-        return Math.ceil((getArriendoPer1() + getArriendoPer2() ) * 1.19);
+        return Math.ceil((getArriendoPer1() + getArriendoPer2()) * 1.19);
 
     }
+
     public Double getNeto() {
-        return  Math.ceil((getTotal() - getTotalCargo()));
+        return Math.ceil((getTotal() - getTotalCargo()));
 
 
     }
-    public Double getTotalNeto(){
-        return Math.floor((getNeto() ) / 1.19);
+
+    public Double getTotalNeto() {
+        return Math.floor((getNeto()) / 1.19);
 
     }
 
     public Double getTotal() {
-        return Math.floor(getTotalAdmin() + getTotalElect() +getTotalCargo() + getTotalCompra() + getTotalTpoBase() + getTotalCargoEner() +getTotalArriendo() );
+        return Math.floor(getTotalAdmin() + getTotalElect() + getTotalCargo() + getTotalCompra() + getTotalTpoBase() + getTotalCargoEner() + getTotalArriendo());
 
     }
-
 
 
     public Double getImpuesto() {
@@ -216,11 +219,10 @@ public class Consumo implements Serializable {
     public Double getTotalPagar() {
         return
 
-                Math.ceil(getTotal()  + getOtrosCargos()) - ( ( getTotal() + getOtrosCargos() )% 100);
+                Math.ceil(getTotal() + getOtrosCargos()) - ((getTotal() + getOtrosCargos()) % 100);
 
 
     }
-
 
 
 }

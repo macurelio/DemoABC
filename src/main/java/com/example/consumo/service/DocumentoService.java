@@ -1,6 +1,5 @@
 package com.example.consumo.service;
 
-import com.example.consumo.domain.Consumo;
 import com.example.consumo.domain.Documento;
 
 import java.util.List;
@@ -8,10 +7,11 @@ import java.util.List;
 public interface DocumentoService {
     List<Documento> getAll();
 
-    List<Documento> findAllByIdRecep (Long idDoc);
-    void saveReceptorByIdRecep(Documento documento);
+    void saveReceptorByIdDoc(Documento documento);
 
     Documento findByIdDoc(long idDoc);
+
+    Documento findByIdRecep(long idRecep);
 
     Documento getConsumoByIdCon(long idCon);
 

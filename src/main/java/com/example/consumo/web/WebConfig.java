@@ -15,26 +15,26 @@ import java.util.Locale;
 public class WebConfig implements WebMvcConfigurer {
 
     @Bean
-    public LocaleResolver localeResolver(){
+    public LocaleResolver localeResolver() {
         var slr = new SessionLocaleResolver();
         slr.setDefaultLocale(new Locale("spanish"));
         return slr;
     }
 
     @Bean
-    public LocaleChangeInterceptor localeChangeInterceptor(){
+    public LocaleChangeInterceptor localeChangeInterceptor() {
         var lci = new LocaleChangeInterceptor();
         lci.setParamName("lang");
         return lci;
     }
 
     @Override
-    public void addInterceptors(InterceptorRegistry registro){
+    public void addInterceptors(InterceptorRegistry registro) {
         registro.addInterceptor(localeChangeInterceptor());
     }
 
     @Override
-    public void addViewControllers(ViewControllerRegistry registro){
+    public void addViewControllers(ViewControllerRegistry registro) {
         registro.addViewController("/").setViewName("index");
         registro.addViewController("/login");
         registro.addViewController("/errores/403").setViewName("/errores/403");

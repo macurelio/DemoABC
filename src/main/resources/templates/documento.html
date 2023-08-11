@@ -35,11 +35,11 @@
     <td th:text="${documento.fchVenc}"></td>
 
     <td>
-      <a th:href="@{/documento/{id}/editar(id=${documento.idDoc})}" class="btn btn-warning">Editar</a>
+      <a th:href="@{/documento/{id}/editar(id=${documento.idCon})}" class="btn btn-warning">Editar</a>
     <td>
 
     <td>
-      <a th:href="@{/documento/{id}/eliminar(id=${documento.idDoc})}" class="btn btn-danger">Eliminar</a>
+      <a th:href="@{/documento/{id}/eliminar(id=${documento.idCon})}" class="btn btn-danger">Eliminar</a>
     </td>
     <td>
       <a th:href="@{/documento/{id}/info_documento(id=${documento.idDoc})}" class="btn btn-warning">Info</a>

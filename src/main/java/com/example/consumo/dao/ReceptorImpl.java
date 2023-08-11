@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ReceptorImpl implements ReceptorService {
@@ -28,18 +29,40 @@ public class ReceptorImpl implements ReceptorService {
 
     @Override
     public void saveReceptor(Receptor receptor) {
-    this.receptorRepository.save(receptor);
+        this.receptorRepository.save(receptor);
     }
 
     @Override
     public Receptor getReceptorByIdRecep(long idRecep) {
-        return receptorRepository.findById(idRecep).orElse(null);
+        Optional<Receptor> optional = receptorRepository.findById(idRecep);
+        Receptor receptor = null;
+        if (optional.isPresent()) {
+            receptor = optional.get();
+        } else {
+            throw new RuntimeException(" Receptor not found for id :: " + idRecep);
+        }
+        return receptor;
+
+    }
+
+
+    @Override
+    public Receptor getReceptorByIdCon(long idCon) {
+        Optional<Receptor> optional = receptorRepository.findById(idCon);
+        Receptor receptor = null;
+        if (optional.isPresent()) {
+            receptor = optional.get();
+        } else {
+            throw new RuntimeException(" Receptor not found for id :: " + idCon);
+        }
+        return receptor;
+
     }
 
 
     @Override
     public void deleteReceptorByIdRecep(long id) {
-    receptorRepository.deleteById(id);
+        receptorRepository.deleteById(id);
     }
 
 

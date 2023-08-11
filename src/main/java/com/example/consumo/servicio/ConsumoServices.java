@@ -12,7 +12,4 @@ public interface ConsumoServices extends JpaRepository<Consumo, Long> {
     List<Consumo> findAllByIdRecep(Long idRecep);
 
 
-
-
-
 }

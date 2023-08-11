@@ -31,6 +31,7 @@
       <th></th>
       <th></th>
       <th>Imprimir XML</th>
+      <th></th>
       <th>Descargar XML</th>
       <th>Descargar PDF</th>
 
@@ -64,10 +65,13 @@
         <a th:href="@{/consumo/{id}/eliminar(id=${consumo.idCon})}" class="btn btn-danger">Eliminar</a>
       </td>
       <td>
-        <a th:href="@{/consumo/{id}/imprimir-xml(id=${consumo.idRecep})}" class="btn btn-success">imprimir-xml</a>
+        <a th:href="@{/consumo/{id}/imprimir-xml(id=${consumo.idCon})}+@{/receptor/{id1}/consumo(id1=${consumo.idRecep})}" class="btn btn-success">imprimir-xml</a>
       </td>
       <td>
-        <a th:href="@{/consumo/{id}/download-xml(id=${consumo.idRecep})}" class="btn btn-primary">Descarga-xml</a>
+        <a th:href="@{/consumo/{id}/imprimir-xmlNC(id=${consumo.idCon})}+@{/receptor/{id1}/consumo(id1=${consumo.idRecep})}" class="btn btn-success">imprimir-xmlNC</a>
+      </td>
+      <td>
+        <a th:href="@{/consumo/{id}/download-xml(id=${consumo.idCon})}+@{/receptor/{id1}/consumo(id1=${consumo.idRecep})}" class="btn btn-primary">Descarga-xml</a>
       </td>
       <td>
         <a th:href="@{/{id}/generar-informe(id=${consumo.idCon})}" class="btn btn-link">Descarga-PDF</a>

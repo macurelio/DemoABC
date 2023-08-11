@@ -27,7 +27,8 @@ public class ConsumoImpl implements ConsumoSer {
     }
 
     @Override
-    public void saveReceptorByIdRecep(Consumo consumo) {this.consumoServices.save(consumo);
+    public void saveReceptorByIdRecep(Consumo consumo) {
+        this.consumoServices.save(consumo);
 
     }
 
@@ -38,13 +39,11 @@ public class ConsumoImpl implements ConsumoSer {
         if (optional.isPresent()) {
             consumo = optional.get();
         } else {
-            throw new RuntimeException(" Employee not found for id :: " + idCon);
+            throw new RuntimeException(" Consumo not found for id :: " + idCon);
         }
         return consumo;
 
     }
-
-
 
 
     @Override
@@ -60,7 +59,8 @@ public class ConsumoImpl implements ConsumoSer {
     }
 
     @Override
-    public void deleteReceptorByIdCon(long id) {  consumoServices.deleteById(id);
+    public void deleteReceptorByIdCon(long id) {
+        consumoServices.deleteById(id);
 
     }
 }

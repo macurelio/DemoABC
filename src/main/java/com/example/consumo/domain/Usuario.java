@@ -8,7 +8,7 @@ import java.util.List;
 
 @Entity
 @Data
-@Table(name="usuario")
+@Table(name = "usuario")
 public class Usuario implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -21,7 +21,7 @@ public class Usuario implements Serializable {
     private String password;
 
     @OneToMany
-    @JoinColumn(name="id_usuario")
+    @JoinColumn(name = "id_usuario")
     private List<Rol> roles;
 }
 

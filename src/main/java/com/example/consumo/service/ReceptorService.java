@@ -8,10 +8,14 @@ public interface ReceptorService {
 
     List<Receptor> getAll();
 
+
     List<Receptor> findAllByIdRecep(Long idRecep);
 
-
     void saveReceptor(Receptor receptor);
-    Receptor getReceptorByIdRecep(long id);
+
+    Receptor getReceptorByIdRecep(long idRecep);
+
+    Receptor getReceptorByIdCon(long idCon);
+
     void deleteReceptorByIdRecep(long idRecep);
 }

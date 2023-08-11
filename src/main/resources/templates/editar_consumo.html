@@ -11,7 +11,7 @@
 <div class="container">
   <h1>Editar Datos:</h1>
   <form th:action="@{/salvar-consumo}" th:object="${consumo}" method="post">
-    <input type="hidden" name="idCon" th:field="*{idCon}"/>
+    <input type="hidden" name="idCon" th:field="*{idRecep}"/>
     <input type="hidden" name="idRecep" th:field="*{idRecep}"/>
     <div class="form-group">
 
