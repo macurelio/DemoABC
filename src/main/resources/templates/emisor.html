@@ -25,6 +25,8 @@
     <th></th>
     <th></th>
     <th></th>
+    <th></th>
+    <th></th>
   </tr>
   </thead>
   <tbody>
@@ -45,6 +47,12 @@
       </td>
     <td>
       <a th:href="@{/emisor/{id}/receptor(id=${emisor.idEmis})}" class="btn btn-success">Receptores</a>
+    </td>
+    <td>
+      <a th:href="@{/{idEmis}/agregar-receptor(idEmis=${emisor.idEmis})}" class="btn btn-success">Agregar Receptor</a>
+    </td>
+    <td>
+      <a th:href="@{/{idEmis}/agregar-valor(idEmis=${emisor.idEmis})}" class="btn btn-success">Agregar Valor</a>
     </td>
 
 

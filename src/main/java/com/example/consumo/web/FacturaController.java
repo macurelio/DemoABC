@@ -1,10 +1,13 @@
 package com.example.consumo.web;
 
+import com.example.consumo.dao.NotaCreditoService;
+import com.example.consumo.dao.ValorImpl;
 import com.example.consumo.domain.*;
 import com.example.consumo.service.ConsumoSer;
-import com.example.consumo.service.DocumentoService;
+import com.example.consumo.service.EmisorService;
 import com.example.consumo.service.ReceptorService;
 import com.example.consumo.servicio.*;
+import net.sf.jasperreports.engine.JRException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
@@ -14,13 +17,13 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
+import java.io.FileNotFoundException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @Controller
@@ -29,103 +32,97 @@ public class FacturaController {
     @Autowired
     private final ConsumoSer consumoServices;
     @Autowired
-    private final ItemRepository itemRepository;
-    @Autowired
-    private final EmisorRepository emisorRepository;
+    private final EmisorService emisorService;
     @Autowired
     private final XmlService xmlService;
     @Autowired
     private final ReceptorService receptorService;
     @Autowired
-    private final DocumentoService documentoService;
-    @Autowired
-    private final DetalleRepository detalleRepository;
-    @Autowired
-    private final TotalesRepository totalesRepository;
-    @Autowired
     private final PdfService pdfService;
     @Autowired
     private final PdfNC pdfNC;
+    @Autowired
+    private final NotaCreditoRepository notaCreditoService;
+    @Autowired
+    private final ValorImpl valorRepository;
 
 
-    public FacturaController(PdfNC  pdfNC,XmlService xmlService, EmisorRepository emisorRepository, ReceptorService receptorService, DocumentoService documentoService, DetalleRepository detalleRepository, TotalesRepository totalesRepository, ConsumoSer consumoServices, ItemRepository itemRepository, PdfService pdfService) {
+    public FacturaController(ValorImpl valorRepository,NotaCreditoRepository notaCreditoService, PdfNC pdfNC, XmlService xmlService, EmisorService emisorService, ReceptorService receptorService, ConsumoSer consumoServices, PdfService pdfService) {
 
         this.xmlService = xmlService;
         this.consumoServices = consumoServices;
-        this.emisorRepository = emisorRepository;
+        this.emisorService = emisorService;
         this.receptorService = receptorService;
-        this.documentoService = documentoService;
-        this.detalleRepository = detalleRepository;
-        this.totalesRepository = totalesRepository;
-        this.itemRepository = itemRepository;
         this.pdfService = pdfService;
         this.pdfNC = pdfNC;
+        this.notaCreditoService = notaCreditoService;
+        this.valorRepository = valorRepository;
     }
 
 
     @GetMapping("/")
     public String listar(Model model) {
-        model.addAttribute("emisors", emisorRepository.findAll());
+        model.addAttribute("emisors", emisorService.getAllEmisors());
         model.addAttribute("repectors", receptorService.getAll());
-        model.addAttribute("consumos", consumoServices.getAll());
-        model.addAttribute("documentos", documentoService.getAll());
+        model.addAttribute("consumos", consumoServices.getAllConsumos());
 
         return "index";
     }
 
     @GetMapping("/emisor")
     public String listarEmisor(Model model) {
-        model.addAttribute("emisors", emisorRepository.findAll());
+        model.addAttribute("emisors", emisorService.getAllEmisors());
         return "emisor";
     }
 
     @GetMapping("/receptor")
     public String listarReceptor(Model model) {
         model.addAttribute("receptors", receptorService.getAll());
-        return "receptor";
-    }
 
-    @GetMapping("/documento")
-    public String listarDocumentos(Model model) {
-        model.addAttribute("documentos", documentoService.getAll());
-        return "documento";
+        return "receptor";
     }
 
     @GetMapping("/consumo")
     public String listarConsumo(Model model) {
-        model.addAttribute("consumos", consumoServices.getAll());
+        model.addAttribute("consumos", consumoServices.getAllConsumos());
         model.addAttribute("repectors", receptorService.getAll());
         return "consumo";
     }
 
     @GetMapping("/emisor/{id}")
     public String listarEmisores(@PathVariable Long id, Model model) {
-        model.addAttribute("emisors", emisorRepository.findByIdEmis(id));
+        model.addAttribute("emisors", emisorService.getEmisorByIdEmis(id));
         return "emisor";
     }
 
 
     @GetMapping("/emisor/{id}/receptor")
     public String listarReceptor(@PathVariable Long id, Model model) {
-        model.addAttribute("receptors", receptorService.getAll());
+        List<Receptor> receptors = receptorService.findAllByIdEmis(id);
+        model.addAttribute("receptors", receptors);
         return "receptor";
     }
 
+    @GetMapping("/{idEmis}/agregar-receptor")
+    public String agregarReceptor(@PathVariable Long idEmis, Model model) {
+        Emisor emisor = emisorService.getEmisorByIdEmis(idEmis);
+        model.addAttribute("emisor", emisor);
+        model.addAttribute("receptor", new Receptor());
+        return "agregar_receptor";
+    }
+
+    @PostMapping("/{idEmis}/agregar-receptor")
+    public String guardarReceptor(@PathVariable Long idEmis, @ModelAttribute Receptor receptor) {
+        receptorService.saveReceptor(idEmis, receptor);
+        return "receptor";
+    }
 
     @GetMapping("/receptor/{id}/consumo")
     public String listarConsumos(@PathVariable Long id, Model model) {
-        model.addAttribute("receptor", receptorService.getReceptorByIdRecep(id));
-        model.addAttribute("consumos", consumoServices.findAllByIdRecep(id));
+        List<Consumo> consumo = consumoServices.getConsumosByIdRecep(id);
+        model.addAttribute("consumos", consumo);
 
         return "consumo";
-    }
-
-
-    @GetMapping("/consumo/{id}/documento")
-    public String listarDocumento(@PathVariable Long id, Model model) {
-        model.addAttribute("consumos", consumoServices.getConsumoByIdRecep(id));
-        model.addAttribute("documentos", documentoService.findByIdDoc(id));
-        return "documento";
     }
 
 
@@ -135,34 +132,59 @@ public class FacturaController {
         return "agregar_emisor";
     }
 
+    @GetMapping("/{idEmis}/agregar-valor")
+    public String agregarValor(@PathVariable Long idEmis, Model model) {
+        Emisor emisor = emisorService.getEmisorByIdEmis(idEmis);
+        Valor valor = new Valor();
 
-    @GetMapping("/receptor/{id}/generar-consumo")
-    public String agregarConsumo(@PathVariable Long id, Model model) {
-        Consumo consumo = consumoServices.getConsumoByIdRecep(id);
-        model.addAttribute("consumo", consumo);
-        model.addAttribute("receptor", new Consumo());
-        return "agregar_consumo";
+        model.addAttribute("valor", valor);
+        model.addAttribute("emisor", emisor);
+        return "agregar_valor";
     }
+    @PostMapping("/salvar-valor/{idEmis}")
+    public String guardarValor(@PathVariable Long idEmis, @ModelAttribute Valor valor) {
+    valorRepository.saveValor(idEmis, valor);
 
-    @PostMapping("/salvar-consumo")
-    public String guardarConsumo(Consumo consumo) {
 
-        consumoServices.saveReceptorByIdRecep(consumo);
         return "redirect:/receptor";
     }
 
 
-    @GetMapping("/agregar-documento")
-    public String agregarDocumento( Model model) {
-        model.addAttribute("documento", new Documento());
-        return "agregar_documento";
+
+
+
+
+
+    @GetMapping("/agregar-consumo/{idRecep}/{idEmis}")
+    public String agregarConsumo(@PathVariable Long idRecep, @PathVariable Long idEmis, Model model) {
+        Receptor receptores = receptorService.getReceptorByIdRecep(idRecep);
+        Consumo ultimoConsumo = consumoServices.getUltimoConsumoByReceptorId(idRecep);
+        // Obtener el último consumo
+        Consumo nuevoConsumo = new Consumo();
+        if (ultimoConsumo != null) {
+            nuevoConsumo.setLecturaAnt1(ultimoConsumo.getLecturaAct2()); // Setear lecturaAnt1 del último consumo
+        }
+        model.addAttribute("nuevoConsumo", nuevoConsumo);
+        model.addAttribute("receptores", receptores );
+        return "agregar_consumo";
     }
 
-    @GetMapping("/agregar-receptor")
-    public String agregarReceptor(Model model) {
-        model.addAttribute("receptor", new Receptor());
-        return "agregar_receptor";
+
+
+
+
+    @PostMapping("/salvar-consumo/{idRecep}/{idEmis}")
+    public String guardarConsumo(@ModelAttribute Consumo consumo, Valor valor,@PathVariable Long idRecep, @PathVariable Long idEmis) {
+    consumo.calcularMontos();
+    consumoServices.calcularValores(idEmis, consumo);
+    consumoServices.guardarConsumo(idRecep, idEmis, consumo);
+
+
+
+        return "redirect:/receptor";
     }
+
+
 
 
     @GetMapping("/regresar")
@@ -185,10 +207,6 @@ public class FacturaController {
         return "redirect:/emisor";
     }
 
-    @GetMapping("/regresarDocumento")
-    public String regresarDocumento() {
-        return "redirect:/documento";
-    }
 
 
     @GetMapping("/receptor/{id}/eliminar")
@@ -197,109 +215,187 @@ public class FacturaController {
         return "redirect:/emisor/{id}/receptor";
     }
 
-    @GetMapping("/documento/{id}/eliminar")
-    public String eliminarDocumento(@PathVariable("id") Long id) {
-        documentoService.deleteReceptorByIdCon(id);
-        return "redirect:/consumo/{id}/documento";
-    }
 
     @GetMapping("/emisor/{id}/eliminar")
     public String eliminarEmisor(@PathVariable("id") Long id) {
-        emisorRepository.deleteById(id);
+        emisorService.eliminaEmisor(id);
         return "redirect:/emisor";
     }
 
     @GetMapping("/consumo/{id}/eliminar")
     public String eliminarConsumo(@PathVariable("id") Long id) {
-        consumoServices.deleteReceptorByIdCon(id);
+        consumoServices.eliminarConsumo(id);
         return "redirect:/consumo";
-    }
-
-
-    @PostMapping("/guardar4")
-    public String guardarReceptor(@ModelAttribute Receptor receptor) {
-        receptorService.saveReceptor(receptor);
-        return "redirect:/receptor";
-    }
-
-
-
-    @PostMapping("/guardar2")
-    public String guardarDocumento(@ModelAttribute Documento documento) {
-        documentoService.saveReceptorByIdDoc(documento);
-        return "redirect:/documento";
     }
 
     @PostMapping("/guardar3")
     public String guardarEmisor(@ModelAttribute Emisor emisor) {
-        emisorRepository.save(emisor);
+        emisorService.guardarEmisor(emisor);
+        return "redirect:/emisor";
+    }
+    @PostMapping("/{idEmis}/guardar4")
+    public String guardarReceptor1(@PathVariable Long idEmis,@ModelAttribute Receptor receptor) {
+        Receptor receptors = receptorService.getReceptorByIdEmis(idEmis);
+        receptorService.saveReceptor( idEmis,receptor);
         return "redirect:/emisor";
     }
 
 
-    @GetMapping("/documento/{id}/editar")
-    public String mostrarFormularioEditarDocumento(@PathVariable Long id, Model model) {
-        Documento documento = documentoService.getConsumoByIdCon(id);
-        model.addAttribute("documento", documento);
-        return "editar_documento";
-    }
 
-
-    @GetMapping("/receptor/{id}/editar")
-    public String mostrarFormularioEditarReceptor(@PathVariable Long id, Model model) {
-        Receptor receptor = receptorService.getReceptorByIdRecep(id);
+    @GetMapping("/receptor/{idEmis}/editar")
+    public String mostrarFormularioEditarReceptor(@PathVariable Long idEmis, Model model) {
+        Receptor receptor = receptorService.getReceptorByIdRecep(idEmis);
         model.addAttribute("receptor", receptor);
         return "editar_receptor";
     }
 
 
-    @GetMapping("/consumo/{id}/editar")
+   /* @GetMapping("/consumo/{id}/editar")
     public String mostrarFormularioEditarConsumo(@PathVariable Long id, Model model) {
-        Consumo consumo = consumoServices.findByIdCon(id);
-        model.addAttribute("consumo", consumo);
-        return "editar_consumo";
+        Consumo consumo = consumoServices.getConsumoById(id);
+        model.addAttribute("consumo", consumo );
+
+        return "editar_consumo";s
     }
+
+    */
+
+
+
+    @GetMapping("/consumo-editar/{id}/{idRecep}")
+    public String editarNotaDeCredito(@PathVariable Long id,@PathVariable Long idRecep, Model model) {
+        // Obtener el consumo por su folio
+        Consumo consumo = consumoServices.getConsumoById(id);
+        Receptor receptor = receptorService.getReceptorByIdRecep(idRecep);
+
+        // Pasar los valores double del consumo a la página
+        model.addAttribute("consumo", consumo );
+        model.addAttribute("consumoKwh", consumo.getConsumoKwh());
+        model.addAttribute("adminServicio", consumo.getAdminServicio());
+        model.addAttribute("transElect", consumo.getTransElect());
+        model.addAttribute("arriendo", consumo.getArriendo());
+        model.addAttribute("consumoTotal", consumo.getConsumoTotal());
+
+        return "editar_consumo"; // Página para editar la nota de crédito
+    }
+
+    @PostMapping("/editar-consumo/{id}")
+    public NotaCredito generarNotaCredito(@PathVariable Long id, Consumo consumo) {
+        Consumo consumoActual = consumoServices.getConsumoById(id);
+        Double consumoAnterior = consumoActual.getConsumoTotal();
+        //Double diferenciaConsumo = nuevoConsumo - consumoAnterior;
+
+        // Calcular monto no afecto (prcCargo)
+        //Double montoNoAfecto =  consumoActual.getPrcCargo();
+
+        // Calcular monto afecto (suma de adminServicio, transElect, consumoTotal y arriendo)
+        Double montoAfecto = consumoActual.getAdminServicio() + consumoActual.getTransElect()
+                + consumoActual.getConsumoTotal() + consumoActual.getArriendo();
+
+        // Actualizar el consumo
+        //consumoActual.setConsumoTotal(nuevoConsumo);
+        //consumoServices.guardarConsumo(consumoActual);
+
+        // Crear una nueva nota de crédito
+        NotaCredito notaCredito = new NotaCredito();
+        notaCredito.setMntoAfecto(montoAfecto);
+        //notaCredito.setMntoNoafecto(montoNoAfecto);
+        notaCredito.setIva(montoAfecto * 0.19); // Suponiendo un 19% de IVA
+        //notaCredito.setTotal(montoAfecto + montoNoAfecto + notaCredito.getIva());
+
+        // Otras asignaciones de atributos según tus necesidades
+
+        notaCreditoService.save(notaCredito);
+
+        return notaCredito;
+    }
+
+
+    /*@PostMapping("/editar-consumo/{idRecep}/{idEmis}")
+    public String editarConsumo( @ModelAttribute Consumo consumo,@PathVariable Long idRecep,@PathVariable Long idEmis, @RequestParam Double adminServicio,
+                                 @RequestParam Double transElect,
+                                 @RequestParam Double consumoTotal,
+                                 @RequestParam Double arriendo) {
+        Receptor receptor = receptorService.getReceptorByIdRecep(idRecep);
+        Emisor emisor = emisorService.getEmisorByIdEmis(idEmis);
+        consumo.calcularMontos();
+        consumoServices.calcularValores(idRecep, consumo);
+        consumoServices.guardarConsumo(idRecep, idEmis, consumo);
+
+        // Crear una nueva nota de crédito y guardarla en la base de datos
+        notaCreditoService.crearNotaDeCredito(consumo, adminServicio,
+                transElect, consumoTotal, arriendo, emisor.getPrcTpobase());
+        return "redirect:/receptor";
+    }
+
+     */
+
+
 
     @GetMapping("/emisor/{id}/editar")
     public String mostrarFormularioEditarEmisor(@PathVariable Long id, Model model) {
-        Optional<Emisor> emisor = emisorRepository.findById(id);
+        Emisor emisor = emisorService.getEmisorByIdEmis(id);
         model.addAttribute("emisor", emisor);
         return "editar_emisor";
     }
 
 
-    @GetMapping("/{id}/generar-informe")
-    public ResponseEntity generarInforme(@PathVariable Long id) {
-        try {
-            byte[] reportBytes = pdfService.generarInformePorIdCliente(id);
 
-            // Configurar la cabecera de la respuesta HTTP
-            HttpHeaders headers = new HttpHeaders();
-            headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=informe.pdf");
+    @GetMapping("/receptor/{idRecep}/generar-pdf/consumo")
+    public ResponseEntity<byte[]> generarBoletaPDF(@PathVariable Long idRecep, Model model) throws JRException, FileNotFoundException {
+        byte[] pdfBytes = pdfService.generarBoletaPDF(idRecep);
+        //Consumo consumo = consumoServices.getConsumoById(id);
+        Receptor receptor = receptorService.getReceptorByIdRecep(idRecep);
+        //model.addAttribute("consumo", consumo);
+        model.addAttribute("receptor", receptor);
 
-            // Crear el recurso del archivo PDF para la descarga
-            ByteArrayResource resource = new ByteArrayResource(reportBytes);
-
-            // Crear la respuesta con el archivo adjunto
-            return ResponseEntity.ok()
-                    .headers(headers)
-                    .contentType(MediaType.APPLICATION_PDF)
-                    .body(resource);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        if (pdfBytes == null) {
+            // Manejar caso si el PDF no se pudo generar
+            return ResponseEntity.notFound().build();
         }
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_PDF);
+        headers.setContentDispositionFormData("inline", "boleta.pdf");
+
+        return new ResponseEntity<>(pdfBytes, headers, HttpStatus.OK);
+    }
+
+    @GetMapping("/receptor/{idRecep}/generar-pdfNC/consumo")
+    public ResponseEntity<byte[]> generarBoletaPDF2(@PathVariable Long idRecep, Model model) throws JRException, FileNotFoundException {
+        byte[] pdfBytes = pdfService.generarBoletaPDF2(idRecep);
+        //Consumo consumo = consumoServices.getConsumoById(id);
+        Receptor receptor = receptorService.getReceptorByIdRecep(idRecep);
+       // model.addAttribute("consumo", consumo);
+        model.addAttribute("receptor", receptor);
+
+        if (pdfBytes == null) {
+            // Manejar caso si el PDF no se pudo generar
+            return ResponseEntity.notFound().build();
+        }
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_PDF);
+        headers.setContentDispositionFormData("inline", "boleta.pdf");
+
+        return new ResponseEntity<>(pdfBytes, headers, HttpStatus.OK);
     }
 
 
-    @GetMapping("/consumo/{id}/imprimir-xml/receptor/{id1}/consumo")
-    public String imprimirXml(@PathVariable Long id, @PathVariable Long id1, Model model) {
-        String xmlData = xmlService.generateXmlById(id, id1);
-        Consumo consumo = consumoServices.findByIdCon(id);
-        Receptor receptor = receptorService.getReceptorByIdRecep(id1);
-        Documento documento = documentoService.getConsumoByIdCon(id);
+
+
+
+
+
+    @GetMapping("/{idEmis}/{idRecep}/consumo/{id}/imprimir-xml")
+    public String imprimirXml(@PathVariable Long id, @PathVariable Long idEmis,@PathVariable Long idRecep, Model model) {
+        String xmlData = xmlService.generateXmlById(id, idEmis, idRecep);
+        Consumo consumo = consumoServices.getConsumoById(id);
+        Receptor receptor = receptorService.getReceptorByIdEmis(idRecep);
+        Emisor emisor = emisorService.getEmisorByIdEmis(idEmis);
         model.addAttribute("consumo", consumo);
         model.addAttribute("receptor", receptor);
-        model.addAttribute("documento", documento);
+        model.addAttribute("emisor", emisor);
         model.addAttribute("xmlData", xmlData);
 
 
@@ -307,16 +403,49 @@ public class FacturaController {
 
     }
 
+    @GetMapping("/agregar-nc/{id}")
+    public String agregarNota(Model model,@PathVariable Long id) {
+        Consumo consumo = consumoServices.getConsumoById(id);
+        model.addAttribute("notaCredito", new NotaCredito());
+        model.addAttribute("consumo", consumo);
+        return "nota_credito";
+    }
 
-    @GetMapping("/consumo/{id}/imprimir-xmlNC/receptor/{id1}/consumo")
-    public String imprimirXmlNC(@PathVariable Long id, @PathVariable Long id1, Model model) {
-        String xmlData = xmlService.generateXmlByIdNC(id, id1);
-        Consumo consumo = consumoServices.findByIdCon(id);
-        Receptor receptor = receptorService.getReceptorByIdRecep(id1);
-        Documento documento = documentoService.getConsumoByIdCon(id);
+
+
+
+    @PostMapping("/salvar-credito")
+    public String calcularMontos(Consumo consumo, NotaCredito notaCredito) {
+
+        // Actualizar los valores en la entidad Consumo y guardarlos en la base de datos
+       // notaCreditoService.save(notaCredito);
+
+         ResponseEntity.ok("Cálculos realizados y valores actualizados en la base de datos");
+         return "redirect:/consumo";
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+    @GetMapping("/{idEmis}/{idRecep}/consumo/{id}/imprimir-xmlNC")
+    public String imprimirXmlNC(@PathVariable Long id, @PathVariable Long idRecep,@PathVariable Long idEmis, Model model) {
+        String xmlData = xmlService.generateXmlByIdNC(id, idEmis, idRecep);
+        Consumo consumo = consumoServices.getConsumoById(id);
+        Receptor receptor = receptorService.getReceptorByIdRecep(idRecep);
+       // NotaCredito notaCredito = notaCreditoService.findById(id).orElse(null);
+        Emisor emisor = emisorService.getEmisorByIdEmis(idEmis);
         model.addAttribute("consumo", new Consumo());
         model.addAttribute("receptor", receptor);
-        model.addAttribute("documento", documento);
+        model.addAttribute("emisor", emisor);
+        //model.addAttribute("notaCredito", notaCredito);
         model.addAttribute("xmlData", xmlData);
 
 
@@ -335,14 +464,14 @@ public class FacturaController {
 
 
 
-    @GetMapping("/consumo/{id}/download-xml/receptor/{id1}/consumo")
-    public ResponseEntity<Resource> downloadXmlById(@PathVariable Long id, @PathVariable Long id1, Model model) {
+    @GetMapping("/{idEmis}/{idRecep}/consumo/{id}/download-xml")
+    public ResponseEntity<Resource> downloadXmlById(@PathVariable Long id, @PathVariable Long idEmis,@PathVariable Long idRecep, Model model) {
 
         // Generar el XML
-        String xmlData = xmlService.generateXmlById(id, id1);
-        model.addAttribute("receptor", receptorService.getReceptorByIdRecep(id1));
-        model.addAttribute("consumo", consumoServices.findAllByIdRecep(id));
-        model.addAttribute("documento", documentoService.getConsumoByIdCon(id));
+        String xmlData = xmlService.generateXmlById(id, idEmis, idRecep);
+        model.addAttribute("receptor", receptorService.getReceptorByIdRecep(idRecep));
+        model.addAttribute("consumo", consumoServices.getConsumoById(id));
+        model.addAttribute("emisor", emisorService.getEmisorByIdEmis(idEmis));
 
         // Crear un recurso de tipo ByteArrayResource para el contenido del XML
         ByteArrayResource resource = new ByteArrayResource(xmlData.getBytes());
@@ -355,20 +484,19 @@ public class FacturaController {
     }
 
 
-    @GetMapping("documento/{id}/info_documento")
+    @GetMapping("/documento/{id}/info_documento")
     public String infoDocumento(@PathVariable Long id, Model model) {
         List<Receptor> receptor = receptorService.getAll();
-        Documento documentos = documentoService.findByIdDoc(id);
-        Consumo consumos = consumoServices.findByIdCon(id);
+        Consumo consumos = consumoServices.getConsumoById(id);
 
 
         model.addAttribute("receptor", receptor);
-        model.addAttribute("documentos", documentos);
         model.addAttribute("consumos", consumos);
 
 
         return "info_documento";
     }
+
 
 
 

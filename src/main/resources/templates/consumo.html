@@ -17,72 +17,78 @@
     <tr>
       <th>ID</th>
       <th>Lectura Anterior</th>
-      <th>UltimoDiaDelMes</th>
-      <th>Dias Transcurridos</th>
-      <th>ULTIMO DIA DEL MES 2</th>
-      <th>Dias Transcurridos</th>
+      <th>PORCENTAJE1</th>
+      <th>PORCENTAJE2</th>
       <th>Lectura Actual</th>
       <th>Otros Cargos</th>
       <th>Total</th>
       <th>Impuesto</th>
       <th>Total a Pagar</th>
-      <th>ConsumoKwh</th>
       <th></th>
       <th></th>
       <th></th>
       <th>Imprimir XML</th>
       <th></th>
+      <th></th>
       <th>Descargar XML</th>
       <th>Descargar PDF</th>
+      <th>Descargar NC</th>
+
 
     </tr>
     </thead>
     <tbody>
     <tr th:each="consumo : ${consumos}" >
-      <td th:text="${consumo.idCon}"></td>
+      <td th:text="${consumo.folio}"></td>
       <td th:text="${consumo.lecturaAnt1}"></td>
-      <td th:text="${consumo.getUltimoDiaDelMes}"></td>
-      <td th:text="${consumo.getDiasTranscurridos1}"></td>
-      <td th:text="${consumo.getUltimoDiaDelMes2}"></td>
+      <td th:text="${consumo.getPeriodo1}"></td>
+      <td th:text="${consumo.getPeriodo2}"></td>
       <td th:text="${consumo.lecturaAct2}"></td>
-      <td th:text="${consumo.getDiasTranscurridos2}"></td>
       <td th:text="${consumo.otrosCargos}"></td>
-      <td th:text="${consumo.getTotalconImpuesto}"></td>
-      <td th:text="${consumo.getImpuesto}"></td>
-      <td th:text="${consumo.getTotalPagar}"></td>
-      <td th:text="${consumo.getConsumoKwh}"></td>
-
-
-      <td>
-        <a th:href="@{/consumo/{id}/documento(id=${consumo.idCon})}" class="btn btn-info">Documentos</a>
-      </td>
-
-      <td>
-        <a th:href="@{/consumo/{id}/editar(id=${consumo.idCon})}" class="btn btn-warning">Editar</a>
-      </td>
-
-      <td>
-        <a th:href="@{/consumo/{id}/eliminar(id=${consumo.idCon})}" class="btn btn-danger">Eliminar</a>
-      </td>
-      <td>
-        <a th:href="@{/consumo/{id}/imprimir-xml(id=${consumo.idCon})}+@{/receptor/{id1}/consumo(id1=${consumo.idRecep})}" class="btn btn-success">imprimir-xml</a>
-      </td>
-      <td>
-        <a th:href="@{/consumo/{id}/imprimir-xmlNC(id=${consumo.idCon})}+@{/receptor/{id1}/consumo(id1=${consumo.idRecep})}" class="btn btn-success">imprimir-xmlNC</a>
-      </td>
-      <td>
-        <a th:href="@{/consumo/{id}/download-xml(id=${consumo.idCon})}+@{/receptor/{id1}/consumo(id1=${consumo.idRecep})}" class="btn btn-primary">Descarga-xml</a>
-      </td>
-      <td>
-        <a th:href="@{/{id}/generar-informe(id=${consumo.idCon})}" class="btn btn-link">Descarga-PDF</a>
-      </td>
+      <td th:text="${consumo.total}"></td>
+      <td th:text="${consumo.iva}"></td>
+      <td th:text="${consumo.total}"></td>
 
 
 
+      <td>
+        <a th:href="@{/consumo/{id}/documento(id=${consumo.folio})}" class="btn btn-info">Documentos</a>
+      </td>
+
+      <td>
+        <a th:href="@{/consumo-editar/{id}/{idRecep}(id=${consumo.folio},idRecep=${consumo.receptor.getIdRecep()})}" class="btn btn-warning">EDITAR</a>
+      </td>
+
+      <td>
+        <a th:href="@{/consumo/{id}/eliminar(id=${consumo.folio})}" class="btn btn-danger">Eliminar</a>
+      </td>
+      <td>
+        <a th:href="@{/{idEmis}/{idRecep}(idEmis=${consumo.emisor.idEmis}, idRecep=${consumo.receptor.idRecep})}+ @{/consumo/{id}/imprimir-xml(id=${consumo.folio})}" class="btn btn-success">imprimir-xml</a>
+      </td>
+      <td>
+        <a th:href="@{/{idEmis}/{idRecep}(idEmis=${consumo.emisor.idEmis}, idRecep=${consumo.receptor.idRecep})}+ @{/consumo/{folio}/imprimir-xmlNC(folio=${consumo.folio})}" class="btn btn-success">imprimir-xmlNC</a>
+      </td>
+
+      <td>
+        <a th:href="@{/agregar-nc/{id}(id=${consumo.folio})}" class="btn btn-success">Generar-NC</a>
+      </td>
+
+
+      <td>
+        <a th:href="@{/{idEmis}/{idRecep}(idEmis=${consumo.emisor.idEmis}, idRecep=${consumo.receptor.idRecep})}+ @{/consumo/{id}/download-xml(id=${consumo.folio})}" class="btn btn-primary">Descarga-xml</a>
+      </td>
+      <td>
+        <a th:href=" @{/receptor/{idRecep}/generar-pdfNC(idRecep=${consumo.receptor.idRecep})}+@{/consumo/{id}(id=${consumo.folio})}" class="btn btn-link">Descarga-NOTACREDITO</a>
+      </td>
+      <td>
+        <a th:href=" @{/receptor/{idRecep}/generar-pdf(idRecep=${consumo.receptor.idRecep})}+@{/consumo}" class="btn btn-link">Descarga-PDF</a>
+      </td>
 
     </tr>
+
     </tbody>
   </table>
+
 
   <div>
     <a  class="btn btn-primary" href="/regresar">Regresar</a>

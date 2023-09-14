@@ -1,11 +1,13 @@
 package com.example.consumo.DTE;
 
-import com.example.consumo.domain.Documento;
+import com.example.consumo.domain.Consumo;
 import com.example.consumo.domain.Receptor;
+
+import java.util.Date;
 
 public class NotaCredito {
     private Receptor receptor;
-    private Documento documento;
+    private Consumo consumo;
 
     public Long getIdRecepNC() {
         return receptor.getIdRecep();
@@ -31,28 +33,18 @@ public class NotaCredito {
         return receptor.getCiudadRecep();
     }
 
-    public Long getIdDocNC() {
-        return documento.getIdDoc();
+
+
+
+   /* public String getIndServicioNC() {
+        return consumo.getIndServicio();
     }
 
-    public String getFolioNC() {
-        return documento.getFolio();
-    }
+    */
 
-    public String getFchEmisNC() {
-        return documento.getFchEmis();
-    }
-
-    public String getIndServicioNC() {
-        return documento.getIndServicio();
-    }
-
-    public String getFchVencNC() {
-        return documento.getFchVenc();
-    }
 
     public Long getIdConNC() {
-        return documento.getIdCon();
+        return consumo.getFolio();
     }
 
 

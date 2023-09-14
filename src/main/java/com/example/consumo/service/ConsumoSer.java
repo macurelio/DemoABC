@@ -2,18 +2,26 @@ package com.example.consumo.service;
 
 import com.example.consumo.domain.Consumo;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface ConsumoSer {
-    List<Consumo> getAll();
+    Consumo getConsumoById(Long id);
 
-    List<Consumo> findAllByIdRecep(Long idCon);
+    List<Consumo> getAllConsumos();
 
-    void saveReceptorByIdRecep(Consumo consumo);
+    List<Consumo> getConsumosByIdRecep(Long idRecep);
 
-    Consumo findByIdCon(long idCon);
+    List<Consumo> getConsumosByIdEmis(Long idEmis);
 
-    Consumo getConsumoByIdRecep(long idRecep);
+    Consumo getUltimoConsumoByReceptorId(Long idRecep);
 
-    void deleteReceptorByIdCon(long idCon);
+    Consumo getUltimoConsumoByEmisorId(Long idEmis);
+
+    Consumo guardarConsumo(Long idRecep, Long idEmis, Consumo consumo);
+
+    void eliminarConsumo(Long idCon);
+
+    Consumo calcularValores(Long idEmis, Consumo consumo);
+
 }

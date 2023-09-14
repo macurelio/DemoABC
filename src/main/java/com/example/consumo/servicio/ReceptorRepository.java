@@ -9,5 +9,6 @@ import java.util.List;
 @Repository
 public interface ReceptorRepository extends JpaRepository<Receptor, Long> {
 
-    List<Receptor> findByIdRecep(Long idRecep);
+    List<Receptor> findByEmisor_IdEmis(Long idEmis);
+
 }

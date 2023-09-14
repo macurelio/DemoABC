@@ -46,8 +46,11 @@
       <a th:href="@{/receptor/{id}/consumo(id=${receptor.idRecep})}" class="btn btn-success">Consumos</a>
     </td>
     <td>
-      <a th:href="@{/receptor/{id}/generar-consumo(id=${receptor.idRecep})}" class="btn btn-primary">Agregar Boleta</a>
+      <a th:href="@{/agregar-consumo/{idRecep}/{idEmis}(idRecep=${receptor.idRecep}, idEmis=${receptor.emisor.getIdEmis()})}" class="btn btn-success">Agregar Consumo</a>
     </td>
+
+
+
 
 
 
@@ -59,7 +62,6 @@
 
 <div>
   <a  class="btn btn-primary" href="/regresar">Regresar</a>
-  <a  class="btn btn-primary" href="/agregar-receptor">Agregar Receptor</a>
 </div>
 </div>
 <th:block layout:fragment="page-scripts">

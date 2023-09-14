@@ -10,7 +10,7 @@
 <body>
 <div class="container">
   <h1>Editar Datos:</h1>
-  <form th:action="@{/guardar4}" th:object="${receptor}" method="post">
+  <form th:action="@{/{idEmis}/guardar4(idEmis=${receptor.emisor.getIdEmis()})}" th:object="${receptor}" method="post">
     <input type="hidden" name="idRecep" th:field="*{idRecep}"/>
     <div class="form-group">
 

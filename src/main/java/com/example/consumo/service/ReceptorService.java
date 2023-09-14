@@ -7,15 +7,12 @@ import java.util.List;
 public interface ReceptorService {
 
     List<Receptor> getAll();
-
-
-    List<Receptor> findAllByIdRecep(Long idRecep);
-
-    void saveReceptor(Receptor receptor);
-
+    List<Receptor> findAllByIdRecep(long idRecep);
+    List<Receptor> findAllByIdEmis(long idRecep);
+    Receptor saveReceptor(Long idEmis, Receptor receptor);
+    Receptor editReceptor( Receptor receptor);
     Receptor getReceptorByIdRecep(long idRecep);
-
     Receptor getReceptorByIdCon(long idCon);
-
+    Receptor getReceptorByIdEmis(long idEmis);
     void deleteReceptorByIdRecep(long idRecep);
 }

@@ -1,8 +1,12 @@
 package com.example.consumo.dao;
 
+import com.example.consumo.domain.Emisor;
 import com.example.consumo.domain.Receptor;
 import com.example.consumo.service.ReceptorService;
+import com.example.consumo.servicio.EmisorRepository;
 import com.example.consumo.servicio.ReceptorRepository;
+import jakarta.persistence.EntityNotFoundException;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +18,8 @@ public class ReceptorImpl implements ReceptorService {
 
     @Autowired
     private ReceptorRepository receptorRepository;
+    @Autowired
+    private EmisorRepository emisorRepository;
 
 
     @Override
@@ -22,14 +28,26 @@ public class ReceptorImpl implements ReceptorService {
     }
 
     @Override
-    public List<Receptor> findAllByIdRecep(Long idRecep) {
-        return receptorRepository.findByIdRecep(idRecep);
+    public List<Receptor> findAllByIdRecep(long idEmis) {
+        return receptorRepository.findByEmisor_IdEmis(idEmis);
+    }
+
+    @Override
+    public List<Receptor> findAllByIdEmis(long idEmis) {
+        return receptorRepository.findByEmisor_IdEmis(idEmis);
     }
 
 
     @Override
-    public void saveReceptor(Receptor receptor) {
-        this.receptorRepository.save(receptor);
+    public Receptor saveReceptor(Long idEmis, Receptor receptor) {
+        Emisor emisor = emisorRepository.findById(idEmis)
+                .orElseThrow(() -> new EntityNotFoundException("Emisor not found with id: " + idEmis));
+        receptor.setEmisor(emisor);
+        return receptorRepository.save(receptor);
+    }
+    @Override
+    public Receptor editReceptor( Receptor receptor) {
+        return receptorRepository.save(receptor);
     }
 
     @Override
@@ -57,6 +75,18 @@ public class ReceptorImpl implements ReceptorService {
         }
         return receptor;
 
+    }
+
+    @Override
+    public Receptor getReceptorByIdEmis(long idEmis) {
+        Optional<Receptor> optional = receptorRepository.findById(idEmis);
+        Receptor receptor = null;
+        if (optional.isPresent()) {
+            receptor = optional.get();
+        } else {
+            throw new RuntimeException(" Receptor not found for id :: " + idEmis);
+        }
+        return receptor;
     }
 
 

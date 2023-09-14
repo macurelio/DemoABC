@@ -8,17 +8,16 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjusters;
-import java.util.List;
+import java.util.Calendar;
+import java.util.Date;
 
 @Entity
 @Data
 @Table(name = "consumo")
 public class Consumo implements Serializable {
-    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idCon;
-
+    private Long folio;
     private Double otrosCargos;
     private Double lecturaValor1;
     private Double lecturaValor2;
@@ -26,15 +25,69 @@ public class Consumo implements Serializable {
     private LocalDate lecturaAnt1;
     @Temporal(TemporalType.DATE)
     private LocalDate lecturaAct2;
+    private String tipoDte;
+    @Temporal(TemporalType.DATE)
+    private LocalDate fchEmis;
+    @Temporal(TemporalType.DATE)
+    private LocalDate fchVenc;
+    private Double periodo1;
+    private Double periodo2;
+    private Double consumoKwh;
+    private Double adminServicio;
+    private Double transElect;
+    private Double consumoTotal;
+    private Double arriendo;
+    private Double compra;
+    private Double tpobase;
+    private Double cargoEner;
 
-    private Long idRecep;
+    private Double adminServicio2;
+    private Double transElect2;
+    private Double consumoTotal2;
+    private Double arriendo2;
+    private Double compra2;
+    private Double cargoEner2;
+    private Double tpobase2;
 
-    @OneToMany(targetEntity = Consumo.class, cascade = CascadeType.ALL)
-    @JoinColumn(name = "idCon", referencedColumnName = "idRecep")
-    private List<Consumo> consumos;
+    private Double totalAdmin;
+    private Double totalTrans;
+    private Double totalCompra;
+    private Double totalTpo;
+    private Double totalArriendo;
+    private Double totalCargo;
+    private Double totalConsumo;
+    private Double ajusteCargo;
+    private Double neto;
+    private Double iva;
+    private Double total;
+    private Double mntoEx;
+
+public Double getImpuesto (){
+    return 0.19;
+}
+
+    @ManyToOne
+    @JoinColumn(name = "idEmis")
+    private Emisor emisor;
+
+
+    @ManyToOne
+    @JoinColumn(name = "idRecep")
+    private Receptor receptor;
+    @PrePersist
+    protected void onCreate() {
+        fchEmis = LocalDate.now();
+        fchVenc = fchEmis.plusDays(15); // Agregar 15 días a la fecha de emisión
+    }
+    public LocalDate getFechaEmision() {
+        return fchEmis;
+    }
+    public LocalDate getFechaVencimiento() {
+        return fchVenc;
+    }
 
     public double getConsumoKwh() {
-        return (getLecturaValor1() - getLecturaValor2());
+        return (getLecturaValor2() - getLecturaValor1());
     }
 
 
@@ -43,7 +96,7 @@ public class Consumo implements Serializable {
         return lecturaAnt1.withDayOfMonth(lecturaAnt1.lengthOfMonth()).format(formatter);
     }
 
-    public long getDiasTranscurridos1() {
+    public double getDiasTranscurridos1() {
         LocalDate ultimoDiaMes = lecturaAnt1.withDayOfMonth(lecturaAnt1.lengthOfMonth());
         return ChronoUnit.DAYS.between(lecturaAnt1, ultimoDiaMes) + 1;
     }
@@ -56,172 +109,84 @@ public class Consumo implements Serializable {
         return ultimoDiaMesMasUnDia.format(formatter);
     }
 
-    public long getDiasTranscurridos2() {
+    public double getDiasTranscurridos2() {
         LocalDate ultimoDiaMesMasUnDia = lecturaAct2.withDayOfMonth(lecturaAct2.lengthOfMonth());
         return ChronoUnit.DAYS.between(lecturaAct2, ultimoDiaMesMasUnDia) + 1;
     }
 
-
-    public double getDias() {
-        return (getDiasTranscurridos1() + getDiasTranscurridos2());
+    public double getDias(){
+        return getDiasTranscurridos1() + getDiasTranscurridos2();
     }
 
-    public double getPorcentaje1() {
-        long diasTranscurridos = getDiasTranscurridos1();
-        // Calcula el porcentaje considerando 30 días en un mes
-        return (diasTranscurridos / getDias()) * 100.0;
+    public String getConsumoNombre() {
+        return "Consumo";
+    }
+    public String getAdminServicioNombre() {
+        return "AdminServicio";
+    }
+    public String getArriendoNombre() {
+        return "Arriendo del medidor";
+    }
+    public String geTransElecNombre() {
+        return "Transporte de Electricidad";
+    }
+    public String getSaldoAnteriorNombre() {
+        return "Saldo anterior";
+    }
+    public String getAjusteAnt() {
+        return "Ajuste para facilitar el pago en efectivo, mes anterior";
+    }
+    public String getAjusteAct() {
+        return "Ajuste para facilitar el pago en efectivo, mes actual";
+    }
+    public String getAllQtyItem() {
+        return "1.000000";
     }
 
-    public double getPorcentaje2() {
-        long diasTranscurridos = getDiasTranscurridos2();
-        // Calcula el porcentaje considerando 30 días en un mes
-        return (diasTranscurridos / getDias()) * 100.0;
+    //public String getConsumoQtyItem(){ return "1.000000" ;}
+
+    //public String getAdminServicioQtyItem(){ return "1.000000" ;}
+
+    //public String getArriendoQtyItem(){ return "1.000000" ;}
+
+    //public String getTransElecQtyItem(){ return "1.000000" ;}
+
+    //public String getSaldoAnteriorQtyItem(){ return "1.000000" ;}
+    public String getTpoCodigo() {
+        return "INT";
     }
-
-    public Double getPorcentajePrecio1() {
-        return (getPorcentaje1() * getConsumoKwh()) / 100;
+    public String getAdminServCodigo() {
+        return "11000060";
     }
-
-    public Double getPorcentajePrecio2() {
-        return (getPorcentaje2() * getConsumoKwh()) / 100;
+    public String getTransElecCodigo() {
+        return "1000033";
     }
-
-    public Double getPorcentajeArriendo1() {
-        return (getPorcentaje1() * 1) / 100;
+    public String getTransElecExceCodigo() {
+        return "1000114";
     }
-
-    public Double getPorcentajeArriendo2() {
-        return (getPorcentaje2() * 1) / 100;
+    public String getElecConsumoCodigo() {
+        return "1000100";
     }
-
-    public Double getAdminServicioPer1() {
-        return (getPorcentajeArriendo1() * 1112.94);
+    public String getArriendoCodigo() {
+        return "1000050";
     }
-
-
-    public Double getAdminServicioPer2() {
-        return (getPorcentajeArriendo2() * 1112.94);
+    public String getAjusteCodigo() {
+        return "650010";
     }
-
-    public Double getElectPer1() {
-        return (getPorcentajePrecio1() * 20.34);
+    public String getUnmdItem1() {
+        return "Ea";
     }
-
-    public Double getElectPer2() {
-        return (getPorcentajePrecio2() * 20.34);
-    }
-
-    public Double getCargoPer1() {
-        return (getPorcentajePrecio1() * 0.487);
-    }
-
-    public Double getCargoPer2() {
-        return (getPorcentajePrecio2() * 0.487);
-    }
-
-    public Double geCompraPer1() {
-        return (getPorcentajePrecio1() * 13.158);
-    }
-
-    public Double geCompraPer2() {
-        return (getPorcentajePrecio2() * 13.158);
-    }
-
-    public Double geTpotBasePer1() {
-        return (getPorcentajePrecio1() * 29.495);
-    }
-
-    public Double geTpotBasePer2() {
-        return (getPorcentajePrecio2() * 29.495);
-    }
-
-    public Double getCargoEnerPer1() {
-        return (getPorcentajePrecio1() * 74.293);
-    }
-
-    public Double getCargoEnerPer2() {
-        return (getPorcentajePrecio2() * 74.293);
-    }
-
-    public Double getArriendoPer1() {
-        return (getPorcentajeArriendo1() * 244.606);
-    }
-
-    public Double getArriendoPer2() {
-        return (getPorcentajeArriendo2() * 246.428);
+    public String getUnmdItem2() {
+        return "KWH";
     }
 
 
-    public Double getTotalAdmin() {
-        return Math.floor((getAdminServicioPer1() + getAdminServicioPer2()) * 1.19);
-
-    }
-
-    public Double getTotalElect() {
-        return Math.floor((getElectPer1() + getElectPer2()) * 1.19);
-
-    }
-
-    public Double getTotalCargo() {
-        return Math.floor(getCargoPer1() + getCargoPer2());
-
-    }
-
-    public Double getTotalCompra() {
-        return Math.ceil((geCompraPer1() + geCompraPer2()) * 1.19);
-
-    }
-
-    public Double getTotalTpoBase() {
-        return Math.ceil((geTpotBasePer1() + geTpotBasePer2()) * 1.19);
-
-    }
-
-    public Double getTotalCargoEner() {
-        return Math.ceil((getCargoEnerPer1() + getCargoEnerPer2()) * 1.19);
-
-    }
-
-    public Double getTotalArriendo() {
-        return Math.ceil((getArriendoPer1() + getArriendoPer2()) * 1.19);
-
-    }
-
-    public Double getNeto() {
-        return Math.ceil((getTotal() - getTotalCargo()));
 
 
-    }
-
-    public Double getTotalNeto() {
-        return Math.floor((getNeto()) / 1.19);
-
-    }
-
-    public Double getTotal() {
-        return Math.floor(getTotalAdmin() + getTotalElect() + getTotalCargo() + getTotalCompra() + getTotalTpoBase() + getTotalCargoEner() + getTotalArriendo());
-
-    }
-
-
-    public Double getImpuesto() {
-        return Math.ceil((getTotalNeto()) * 0.19);
-    }
-
-    public Double getTotalconImpuesto() {
-        return
-
-                Math.floor(getImpuesto() + getTotalNeto() + getTotalCargo());
-
-
-    }
-
-    public Double getTotalPagar() {
-        return
-
-                Math.ceil(getTotal() + getOtrosCargos()) - ((getTotal() + getOtrosCargos()) % 100);
-
-
+    public void calcularMontos() {
+        this.fchEmis = getFechaEmision();
+        this.fchVenc = getFechaVencimiento();
+        this.consumoKwh = getConsumoKwh();
     }
 
 

@@ -1,75 +1,27 @@
 package com.example.consumo.dao;
 
 import com.example.consumo.domain.Consumo;
-import com.example.consumo.domain.Emisor;
-import com.example.consumo.domain.Receptor;
+import com.example.consumo.domain.NotaCredito;
 import com.example.consumo.domain.Valor;
-import com.example.consumo.service.ConsumoSer;
 import com.example.consumo.servicio.ConsumoServices;
-import com.example.consumo.servicio.EmisorRepository;
-import com.example.consumo.servicio.ReceptorRepository;
-import jakarta.persistence.EntityNotFoundException;
+import com.example.consumo.servicio.NotaCreditoRepository;
+import com.example.consumo.servicio.ValorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.time.YearMonth;
 import java.util.List;
 
 @Service
-public class ConsumoImpl implements ConsumoSer {
-
+public class NotaCreditoService  {
     @Autowired
-    private ConsumoServices consumoServices;
-    @Autowired
-    private ReceptorRepository receptorService;
-    @Autowired
-    private EmisorRepository emisorRepository;
+    private NotaCreditoRepository notaCreditoRepository;
     @Autowired
     private ValorImpl valorRepository;
 
-
-    @Override
-    public Consumo getConsumoById(Long id) {
-        return consumoServices.findById(id).orElse(null);
-    }
-
-    @Override
-    public List<Consumo> getAllConsumos() {
-        return consumoServices.findAll();
-    }
-
-    @Override
-    public List<Consumo> getConsumosByIdRecep(Long id) {
-        return consumoServices.findByReceptor_IdRecep(id);
-    }
-
-    public List<Consumo> getConsumosByIdEmis(Long idEmis) {
-        return consumoServices.findByEmisor_IdEmis(idEmis);
-    }
-
-    @Override
-    public Consumo getUltimoConsumoByReceptorId(Long idRecep) {
-        return consumoServices.findTopByReceptorIdRecepOrderByFolioDesc(idRecep);
-    }
-
-    @Override
-    public Consumo getUltimoConsumoByEmisorId(Long idEmis) {
-        return consumoServices.findTopByEmisorIdEmisOrderByFolioDesc(idEmis);
-    }
-
-    @Override
-    public Consumo guardarConsumo(Long idRecep, Long idEmis, Consumo consumo) {
-        Receptor receptor = receptorService.findById(idRecep)
-                .orElseThrow(() -> new EntityNotFoundException("Receptor not found with id: " + idRecep));
-        consumo.setReceptor(receptor);
-        Emisor emisor = emisorRepository.findById(idEmis)
-                .orElseThrow(() -> new EntityNotFoundException("Receptor not found with id: " + idEmis));
-        consumo.setEmisor(emisor);
-        return consumoServices.save(consumo);
-    }
-    @Override
-    public Consumo calcularValores(Long idEmis, Consumo consumo) {
+    public NotaCredito calcularValoresNC(Long folio, Consumo consumo) {
+    NotaCredito notaCredito = notaCreditoRepository.findByConsumo_Folio(folio);
+        NotaCredito notaDeCredito = new NotaCredito();
         LocalDate lecturaAnt1 = consumo.getLecturaAnt1();
         LocalDate lecturaAct2 = consumo.getLecturaAct2();
 
@@ -106,7 +58,7 @@ public class ConsumoImpl implements ConsumoSer {
                 compra1 += valor.getPrcCompra();
                 tpobase1 += valor.getPrcTpobase();
             }
-        double getTotalAdmin1 = totalAdmin1 * getPorcentajeArriendo1 ;
+            double getTotalAdmin1 = totalAdmin1 * getPorcentajeArriendo1 ;
             double getTotalTransElec1 = totalTransElect1 * getPorcentajePrecio1 ;
             double getTotalConsumoTotal1 = totalConsumoTotal1 * getPorcentajePrecio1 ;
             double getTotalArriendo1 = totalArriendo1 * getPorcentajeArriendo1 ;
@@ -179,35 +131,45 @@ public class ConsumoImpl implements ConsumoSer {
 
         double getNeto = totalAmin + totalElec + totalArriendo + totalConsumo + totalCompra + totalTpo + excento;
         double getImpuesto = getNeto * 0.19;
-        double getTotal =  totalAmin + totalElec + totalArriendo + totalConsumo + totalCompra + totalTpo + excento + consumo.getOtrosCargos(); ;
-        int redondeo = 100;
-        getTotal = (double) (Math.round(getTotal / redondeo) * redondeo);
-        consumo.setTotalArriendo(totalArriendo);
-        consumo.setTotalAdmin(totalAmin);
-        consumo.setTotalTpo(excento);
-        consumo.setTotalCompra(totalCompra);
-        consumo.setTotalTrans(totalElec);
-        consumo.setTotalTpo(totalTpo);
+        double getTotal = notaDeCredito.getMntoAfecto() + notaDeCredito.getMntoAfecto() ;
 
-        consumo.setTotalCargo(excento);
-        consumo.setTotalConsumo(totalConsumo);
 
-        consumo.setIva(getImpuesto);
-        consumo.setNeto(getNeto);
-        consumo.setTotal(getTotal);
-        consumo.setMntoEx(excento);
-        consumo.setPeriodo1(getPorentaje1);
-        consumo.setPeriodo2(getPorentaje2);
+        notaCredito.setMntoAfecto(getNeto);
+        notaCredito.setArriendo(totalArriendo);
+        notaCredito.setAdminServicio(totalAmin);
+        notaCredito.setMntoNoafecto(excento);
+        notaCredito.setConsumoTotal(totalCompra);
+       notaCredito.setTransElect(totalElec);
+        notaCredito.setIva(getImpuesto);
+        notaCredito.setTotal(getTotal);
 
-            return consumo;
+        return notaCreditoRepository.save(notaDeCredito);
     }
 
-        @Override
-        public void eliminarConsumo (Long idCon){
-            consumoServices.deleteById(idCon);
+    public NotaCredito crearNotaDeCredito(Consumo consumo, Double adminServicio,
+                                            Double transElect,
+                                            Double consumoTotal,
+                                            Double arriendo,
+                                            Double tpoBase) {
+        NotaCredito notaDeCredito = new NotaCredito();
+        //notaDeCredito.setMntoAfecto(nuevoKilowattsConsumidos);
+        notaDeCredito.setTransElect(transElect);
+        notaDeCredito.setAdminServicio(adminServicio);
+        notaDeCredito.setArriendo(arriendo);
+        notaDeCredito.setConsumoTotal(consumoTotal); // Vincula la nota de crédito con el consumo original
 
-        }
+        Double getMntAfecto = transElect + adminServicio + arriendo + consumoTotal;
+        Double getMntNoAfecto = tpoBase;
+
+        return notaCreditoRepository.save(notaDeCredito);
     }
+
+}
+
+
+
+
+
 
 
 

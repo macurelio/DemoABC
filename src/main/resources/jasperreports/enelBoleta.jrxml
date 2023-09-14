@@ -12,14 +12,62 @@
 	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter"/>
+	<parameter name="rzn_socrecep" class="java.lang.String" nestedType="java.lang.String"/>
+	<parameter name="dirRecep" class="java.lang.String"/>
+	<parameter name="tipoDte" class="java.lang.String"/>
+	<parameter name="folio" class="java.lang.String"/>
+	<parameter name="fchEmis" class="java.lang.String"/>
+	<parameter name="fchVenc" class="java.lang.String"/>
+	<parameter name="getImpuesto" class="java.lang.Double"/>
+	<parameter name="getTotalPagar" class="java.lang.Double"/>
+	<parameter name="getTotalNeto" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[SELECT *
-FROM consumo, documento, receptor WHERE consumo.id_con =1 AND documento.id_doc=1
- AND receptor.id_recep=1]]>
+		<![CDATA[SELECT * FROM consumo, receptor
+WHERE consumo.folio=35 AND receptor.id_recep=20]]>
 	</queryString>
+	<field name="folio" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="folio"/>
+		<property name="com.jaspersoft.studio.field.label" value="folio"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="consumo"/>
+	</field>
+	<field name="lectura_valor1" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="lectura_valor1"/>
+		<property name="com.jaspersoft.studio.field.label" value="lectura_valor1"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="consumo"/>
+	</field>
+	<field name="lectura_valor2" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="lectura_valor2"/>
+		<property name="com.jaspersoft.studio.field.label" value="lectura_valor2"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="consumo"/>
+	</field>
 	<field name="otros_cargos" class="java.lang.Double">
 		<property name="com.jaspersoft.studio.field.name" value="otros_cargos"/>
 		<property name="com.jaspersoft.studio.field.label" value="otros_cargos"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="consumo"/>
+	</field>
+	<field name="lectura_ant1" class="java.time.LocalDateTime">
+		<property name="com.jaspersoft.studio.field.name" value="lectura_ant1"/>
+		<property name="com.jaspersoft.studio.field.label" value="lectura_ant1"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="consumo"/>
+	</field>
+	<field name="lectura_act2" class="java.time.LocalDateTime">
+		<property name="com.jaspersoft.studio.field.name" value="lectura_act2"/>
+		<property name="com.jaspersoft.studio.field.label" value="lectura_act2"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="consumo"/>
+	</field>
+	<field name="tipo_dte" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="tipo_dte"/>
+		<property name="com.jaspersoft.studio.field.label" value="tipo_dte"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="consumo"/>
+	</field>
+	<field name="fch_emis" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="fch_emis"/>
+		<property name="com.jaspersoft.studio.field.label" value="fch_emis"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="consumo"/>
+	</field>
+	<field name="fch_venc" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="fch_venc"/>
+		<property name="com.jaspersoft.studio.field.label" value="fch_venc"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="consumo"/>
 	</field>
 	<field name="id_recep" class="java.lang.Integer">
@@ -27,90 +75,89 @@ FROM consumo, documento, receptor WHERE consumo.id_con =1 AND documento.id_doc=1
 		<property name="com.jaspersoft.studio.field.label" value="id_recep"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="consumo"/>
 	</field>
-	<field name="id_doc" class="java.lang.Integer">
-		<property name="com.jaspersoft.studio.field.name" value="id_doc"/>
-		<property name="com.jaspersoft.studio.field.label" value="id_doc"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="documento"/>
-		<fieldDescription><![CDATA[]]></fieldDescription>
+	<field name="admin_servicio" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="admin_servicio"/>
+		<property name="com.jaspersoft.studio.field.label" value="admin_servicio"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="consumo"/>
 	</field>
-	<field name="tipo_dte" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="tipo_dte"/>
-		<property name="com.jaspersoft.studio.field.label" value="tipo_dte"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="documento"/>
-		<fieldDescription><![CDATA[]]></fieldDescription>
+	<field name="trans_elect" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="trans_elect"/>
+		<property name="com.jaspersoft.studio.field.label" value="trans_elect"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="consumo"/>
 	</field>
-	<field name="folio" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="folio"/>
-		<property name="com.jaspersoft.studio.field.label" value="folio"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="documento"/>
-		<fieldDescription><![CDATA[]]></fieldDescription>
+	<field name="consumo_total" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="consumo_total"/>
+		<property name="com.jaspersoft.studio.field.label" value="consumo_total"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="consumo"/>
 	</field>
-	<field name="fch_emis" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="fch_emis"/>
-		<property name="com.jaspersoft.studio.field.label" value="fch_emis"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="documento"/>
-		<fieldDescription><![CDATA[]]></fieldDescription>
+	<field name="arriendo" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="arriendo"/>
+		<property name="com.jaspersoft.studio.field.label" value="arriendo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="consumo"/>
 	</field>
-	<field name="ind_servicio" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="ind_servicio"/>
-		<property name="com.jaspersoft.studio.field.label" value="ind_servicio"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="documento"/>
-		<fieldDescription><![CDATA[]]></fieldDescription>
+	<field name="ajuste_cargo" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="ajuste_cargo"/>
+		<property name="com.jaspersoft.studio.field.label" value="ajuste_cargo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="consumo"/>
 	</field>
-	<field name="fch_venc" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="fch_venc"/>
-		<property name="com.jaspersoft.studio.field.label" value="fch_venc"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="documento"/>
-		<fieldDescription><![CDATA[]]></fieldDescription>
+	<field name="neto" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="neto"/>
+		<property name="com.jaspersoft.studio.field.label" value="neto"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="consumo"/>
 	</field>
-	<field name="COLUMN_16" class="java.lang.Integer">
-		<property name="com.jaspersoft.studio.field.name" value="id_con"/>
-		<property name="com.jaspersoft.studio.field.label" value="id_con"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="documento"/>
+	<field name="iva" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="iva"/>
+		<property name="com.jaspersoft.studio.field.label" value="iva"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="consumo"/>
 	</field>
-	<field name="COLUMN_17" class="java.lang.Integer">
-		<property name="com.jaspersoft.studio.field.name" value="id_recep"/>
-		<property name="com.jaspersoft.studio.field.label" value="id_recep"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="receptor"/>
+	<field name="total" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="total"/>
+		<property name="com.jaspersoft.studio.field.label" value="total"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="consumo"/>
+	</field>
+	<field name="id_emis" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="id_emis"/>
+		<property name="com.jaspersoft.studio.field.label" value="id_emis"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="consumo"/>
 	</field>
 	<field name="rut_receptor" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="rut_receptor"/>
 		<property name="com.jaspersoft.studio.field.label" value="rut_receptor"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="receptor"/>
-		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="rzn_socrecep" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="rzn_socrecep"/>
 		<property name="com.jaspersoft.studio.field.label" value="rzn_socrecep"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="receptor"/>
-		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="giro_emis" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="giro_emis"/>
+		<property name="com.jaspersoft.studio.field.label" value="giro_emis"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="receptor"/>
 	</field>
 	<field name="dir_recep" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="dir_recep"/>
 		<property name="com.jaspersoft.studio.field.label" value="dir_recep"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="receptor"/>
-		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="cmna_recep" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="cmna_recep"/>
 		<property name="com.jaspersoft.studio.field.label" value="cmna_recep"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="receptor"/>
-		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="ciudad_recep" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="ciudad_recep"/>
 		<property name="com.jaspersoft.studio.field.label" value="ciudad_recep"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="receptor"/>
-		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="400" splitType="Stretch">
+		<band height="433" splitType="Stretch">
 			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
 			<image>
-				<reportElement x="500" y="30" width="250" height="150" uuid="3cd27418-04b4-4a5b-be17-962cf9cb725e"/>
+				<reportElement x="500" y="0" width="250" height="150" uuid="3cd27418-04b4-4a5b-be17-962cf9cb725e"/>
 				<imageExpression><![CDATA["C:/Users/marco/OneDrive/Documentos/FotosPublicidad/EnelCabecera.jpg"]]></imageExpression>
 			</image>
 			<staticText>
@@ -127,13 +174,6 @@ FROM consumo, documento, receptor WHERE consumo.id_con =1 AND documento.id_doc=1
 				</textElement>
 				<text><![CDATA[BOLETA ELECTRONICA]]></text>
 			</staticText>
-			<textField>
-				<reportElement x="850" y="49" width="110" height="20" uuid="29cbaa90-16c7-4378-bb27-51ef931246b4"/>
-				<textElement textAlignment="Center">
-					<font size="12"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{folio}]]></textFieldExpression>
-			</textField>
 			<staticText>
 				<reportElement x="779" y="99" width="90" height="20" uuid="61764c6a-29aa-49d7-9349-e29422798903"/>
 				<textElement>
@@ -148,34 +188,6 @@ FROM consumo, documento, receptor WHERE consumo.id_con =1 AND documento.id_doc=1
 				</textElement>
 				<text><![CDATA[Fecha de emision]]></text>
 			</staticText>
-			<textField>
-				<reportElement x="890" y="99" width="89" height="20" uuid="e74ed29a-b0e8-4535-81e3-1606a40ccaa3"/>
-				<textElement>
-					<font size="12"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{rut_receptor}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="890" y="119" width="95" height="20" uuid="9fab3398-37a2-4ce9-a3a1-30555454e5e5"/>
-				<textElement textAlignment="Center">
-					<font size="12"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{fch_emis}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="509" y="170" width="170" height="30" uuid="aad60c17-bbc6-46d3-a09c-ae21bc63819e"/>
-				<textElement>
-					<font size="14"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{rzn_socrecep}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="509" y="200" width="170" height="40" uuid="d073de13-1fc0-4b3b-82a5-fd67318657b2"/>
-				<textElement>
-					<font size="12"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{dir_recep}]]></textFieldExpression>
-			</textField>
 			<staticText>
 				<reportElement x="519" y="279" width="240" height="30" uuid="62e053e4-063c-4a74-a376-00239593a1bc"/>
 				<textElement>
@@ -184,11 +196,11 @@ FROM consumo, documento, receptor WHERE consumo.id_con =1 AND documento.id_doc=1
 				<text><![CDATA[Ruta: C05009101-0309 | ViaCorresp: RMAM]]></text>
 			</staticText>
 			<image>
-				<reportElement x="20" y="250" width="240" height="147" uuid="8ba9b22d-0496-4b24-bc0d-3f3b7cc59da7"/>
+				<reportElement x="10" y="243" width="240" height="147" uuid="8ba9b22d-0496-4b24-bc0d-3f3b7cc59da7"/>
 				<imageExpression><![CDATA["C:/Users/marco/OneDrive/Documentos/FotosPublicidad/DatosSuministro.jpg"]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="510" y="370" width="150" height="30" uuid="df403893-6724-494a-ba59-cbab00c353cd"/>
+				<reportElement x="510" y="310" width="150" height="30" uuid="df403893-6724-494a-ba59-cbab00c353cd"/>
 				<textElement textAlignment="Center">
 					<font size="14"/>
 				</textElement>
@@ -201,17 +213,6 @@ FROM consumo, documento, receptor WHERE consumo.id_con =1 AND documento.id_doc=1
 				</textElement>
 				<text><![CDATA[Total a Pagar]]></text>
 			</staticText>
-			<textField>
-				<reportElement x="879" y="289" width="110" height="50" uuid="3f1fc670-fdf2-49dc-ab25-766a11c7a610"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="16"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{otros_cargos}]]></textFieldExpression>
-			</textField>
-			<image>
-				<reportElement x="10" y="0" width="485" height="240" uuid="852a7f3e-097f-44e2-805a-050bc3063d47"/>
-				<imageExpression><![CDATA["C:/Users/marco/OneDrive/Documentos/FotosPublicidad/ProblemasServ.jpg"]]></imageExpression>
-			</image>
 			<staticText>
 				<reportElement x="679" y="370" width="186" height="20" uuid="1ddeac68-d84a-45f7-9459-d22e2924f0aa"/>
 				<textElement>
@@ -220,40 +221,76 @@ FROM consumo, documento, receptor WHERE consumo.id_con =1 AND documento.id_doc=1
 				<text><![CDATA[Fecha de Vencimiento]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="886" y="375" width="96" height="20" uuid="61776a65-5658-4a08-910e-e2d0edad85d0"/>
-				<textElement textAlignment="Center">
-					<font size="12"/>
-				</textElement>
+				<reportElement x="899" y="89" width="100" height="29" uuid="479231a0-df52-40ce-890d-4b58a7ea504d"/>
+				<textFieldExpression><![CDATA[$F{rut_receptor}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="903" y="110" width="100" height="29" uuid="37caa2dd-82cc-4616-8f8e-3d4912692eac"/>
+				<textFieldExpression><![CDATA[$F{fch_emis}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="898" y="305" width="100" height="29" uuid="b8f25ee9-89e3-4adb-b74f-9dfcc494712c"/>
+				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="500" y="150" width="250" height="20" uuid="7ec066c6-9c04-4cf0-b63b-a0f4ef686652"/>
+				<textFieldExpression><![CDATA[$F{rzn_socrecep}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="500" y="180" width="250" height="20" uuid="5b34cf9d-5672-42b4-9bdf-ef5049954a14"/>
+				<textFieldExpression><![CDATA[$F{dir_recep}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="850" y="370" width="138" height="19" uuid="5288f1e5-7ae2-4f83-ab8a-905c042e25a8"/>
 				<textFieldExpression><![CDATA[$F{fch_venc}]]></textFieldExpression>
 			</textField>
+			<image>
+				<reportElement x="-7" y="0" width="528" height="229" uuid="e21d5d44-ccb1-45f7-b8f4-93686d9cd619"/>
+				<imageExpression><![CDATA["file:///C:/Users/marco/OneDrive/Documentos/FotosPublicidad/ProblemasServ.jpg"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="390" y="319" width="100" height="29" uuid="6e1186bc-53ef-47fb-9f7b-46945793bc2b"/>
+				<textFieldExpression><![CDATA[$F{consumo_total}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="390" y="290" width="100" height="29" uuid="9e05c039-562c-4067-b83b-2048c8d13f36"/>
+				<textFieldExpression><![CDATA[$F{trans_elect}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="390" y="256" width="100" height="29" uuid="28479098-860f-49f5-a883-c775989ca597"/>
+				<textFieldExpression><![CDATA[$F{admin_servicio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="390" y="354" width="100" height="29" uuid="1e055f72-97bc-46a2-8c50-bc9ce4d27e6b"/>
+				<textFieldExpression><![CDATA[$F{arriendo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="260" y="258" width="91" height="21" uuid="d2748f44-31f8-48b0-941d-bdae235c1693"/>
+				<text><![CDATA[ADMIN SERVICIO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="260" y="294" width="91" height="21" uuid="34a19884-607a-4a4f-ae69-c56225024519"/>
+				<text><![CDATA[TRANSPORTE ELECTRICO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="260" y="319" width="91" height="21" uuid="e538ec17-0a44-4474-acef-f63ab76f855f"/>
+				<text><![CDATA[CONSUMO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="260" y="354" width="91" height="21" uuid="5e35d263-3671-4e35-9f61-2a6d72b5d002"/>
+				<text><![CDATA[ARRIENDO]]></text>
+			</staticText>
 		</band>
 	</title>
-	<pageHeader>
-		<band splitType="Stretch"/>
-	</pageHeader>
 	<columnFooter>
-		<band height="149" splitType="Stretch">
+		<band height="150" splitType="Stretch">
 			<staticText>
-				<reportElement x="660" y="32" width="120" height="20" uuid="68f49550-b4bc-4f8d-8f03-fe83b7a6f182"/>
+				<reportElement x="710" y="80" width="120" height="20" uuid="68f49550-b4bc-4f8d-8f03-fe83b7a6f182"/>
 				<textElement textAlignment="Center">
 					<font size="14"/>
 				</textElement>
 				<text><![CDATA[Total a Pagar]]></text>
 			</staticText>
-			<textField>
-				<reportElement x="869" y="32" width="110" height="20" uuid="11b7747f-53f4-4ea5-b107-3568ead0d681"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="14"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{otros_cargos}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="679" y="10" width="110" height="20" uuid="9fd619cf-0696-4b7d-9d87-87d336c4f9f7"/>
-				<textElement textAlignment="Center">
-					<font size="12"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{folio}]]></textFieldExpression>
-			</textField>
 			<staticText>
 				<reportElement x="650" y="0" width="90" height="20" uuid="5769d14f-1dfe-4ca8-84de-de1bf91f874f"/>
 				<textElement>
@@ -261,27 +298,25 @@ FROM consumo, documento, receptor WHERE consumo.id_con =1 AND documento.id_doc=1
 				</textElement>
 				<text><![CDATA[Nº CLIENTE]]></text>
 			</staticText>
-			<textField>
-				<reportElement x="876" y="16" width="96" height="20" uuid="3bb3f2c4-cd3a-4dc1-afd1-89f9223b0e69"/>
-				<textElement textAlignment="Right">
-					<font size="12"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{fch_venc}]]></textFieldExpression>
-			</textField>
 			<staticText>
-				<reportElement x="850" y="0" width="127" height="20" uuid="873df1f9-38ea-4ce8-bcbc-88a80f2ab493"/>
+				<reportElement x="679" y="40" width="127" height="20" uuid="873df1f9-38ea-4ce8-bcbc-88a80f2ab493"/>
 				<text><![CDATA[Fecha de Vencimiento]]></text>
 			</staticText>
 			<image>
-				<reportElement x="30" y="0" width="460" height="149" uuid="ed703db2-d8ac-4182-bfed-0d3a2e6f483c"/>
+				<reportElement x="5" y="0" width="505" height="149" uuid="ed703db2-d8ac-4182-bfed-0d3a2e6f483c"/>
 				<imageExpression><![CDATA["C:/Users/marco/OneDrive/Documentos/FotosPublicidad/PagoPreferencial.jpg"]]></imageExpression>
 			</image>
 			<textField>
-				<reportElement x="519" y="89" width="170" height="40" uuid="d3c9a3e6-4f9e-4994-9b06-2be8a00c7fbb"/>
-				<textElement textAlignment="Center">
-					<font size="20"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{tipo_dte}]]></textFieldExpression>
+				<reportElement x="850" y="37" width="138" height="19" uuid="d7ddf155-114f-4958-9ba4-a03d7ad102b8"/>
+				<textFieldExpression><![CDATA[$F{fch_venc}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="850" y="1" width="138" height="19" uuid="df05e201-72ed-4dd9-ab59-831039bfdf65"/>
+				<textFieldExpression><![CDATA[$F{folio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="879" y="80" width="100" height="29" uuid="e3002a7e-eea8-4890-99a3-b1a1229763b7"/>
+				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
 			</textField>
 		</band>
 	</columnFooter>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Agregar Factura</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+    <h1>Agregar Datos:</h1>
+    <form th:action="@{/salvar-valor/{idEmis}(idEmis=${emisor.getIdEmis()})}" th:object="${valor}" method="post">
+        <div class="form-group">
+            <div class="form-group">
+                <label>Precio Admin servicio:</label>
+                <input class="form-control" type="text"  th:field="*{prcAdminservicio}">
+            </div>
+            <div class="form-group">
+                <label>Precio Electricida servicio:</label>
+                <input class="form-control" type="text"  th:field="*{prcElec}">
+            </div>
+            <div class="form-group">
+                <label>Precio Cargo:</label>
+                <input class="form-control" type="text"  th:field="*{prcCargo}">
+            </div>
+            <div class="form-group">
+                <label>Precio Compra:</label>
+                <input class="form-control" type="text"  th:field="*{prcCompra}">
+            </div>
+            <div class="form-group">
+                <label>Precio Tpobase:</label>
+                <input class="form-control" type="text"  th:field="*{prcTpobase}">
+            </div>
+            <div class="form-group">
+                <label>Precio Cargo Ener:</label>
+                <input class="form-control" type="text"  th:field="*{prcCargoener}">
+            </div>
+            <div class="form-group">
+                <label>Precio Arriendo:</label>
+                <input class="form-control" type="text"  th:field="*{prcArriendo}">
+            </div>
+
+            <div class="form-group">
+                <label>Valido desde:</label>
+                <input class="form-control" type="date"  th:field="*{validoDesde}">
+            </div>
+
+
+
+            <button class="btn btn-primary" type="submit">Guardar</button>
+            <a  class="btn btn-primary" href="/regresarConsumo">Regresar</a>
+    </form>
+
+</div>
+</body>
+</html>
